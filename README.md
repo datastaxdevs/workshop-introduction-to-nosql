@@ -7,9 +7,9 @@
 
 This intructions will lead you to step by step operations for the workshop introducing the NoSQL Databases technologies. 
 
-It doesn't matter if you join our workshop live or you prefer to do at your own pace, we have you covered. In this repository, you'll find everything you need for this workshop:
+## Materials for the Session
 
-## Materials used during presentations
+It doesn't matter if you join our workshop live or you prefer to do at your own pace, we have you covered. In this repository, you'll find everything you need for this workshop:
 
 - [Workshop video](#)
 - [Slide deck](#)
@@ -60,6 +60,8 @@ The status will change to `Active` when the database is ready, this will only ta
 
 In a tabular database we will store ... tables ! The Astra Service is based on Apache Cassandra which is tabular it make sense to start by this one.
 
+> **Tabular databases** organize data in rows and columns, but with a twist from the traditional RDBMS. Also known as wide-column stores or partitioned row stores, they provide the option to organize related rows in partitions that are stored together on the same replicas to allow fast queries. Unlike RDBMSs, the tabular format is not necessarily strict. For example, Apache Cassandra™ does not require all rows to contain values for all columns in the table. Like Key/Value and Document databases, Tabular databases use hashing to retrieve rows from the table. Examples include: Cassandra, HBase, and Google Bigtable.
+
 **✅ 2a. Describe your Keyspace**
 
 At Database creation you provided a keyspace, a logical grouping for tables let's visualize it. In Astra go to CQL Console to enter the following commands
@@ -93,15 +95,6 @@ CREATE TABLE IF NOT EXISTS videos (
  frames    list<int>,
  PRIMARY KEY (videoid)
 );
-
-CREATE TABLE IF NOT EXISTS users_by_city (
- city      text,
- firstname text,
- lastname  text,
- email     text,
- PRIMARY KEY ((city), lastname, email)
-) WITH CLUSTERING ORDER BY(lastname ASC, email ASC);
-
 ```
 
 - *Visualize structure*
@@ -109,7 +102,7 @@ CREATE TABLE IF NOT EXISTS users_by_city (
 describe keyspace nosql1;
 ```
 
-**✅ 2c. Workshing with DATA** :
+**✅ 2c. Working with DATA** :
 
 - *Insert some entries on first table*
 ```sql
@@ -154,7 +147,18 @@ where videoid=e466f561-4ea4-4eb7-8dcc-126e0fbfd573;
 
 But data can be grouped, we stored together what should be retrieved together.
 
-- *Insert some entries on second table*
+- *Create This new table*
+```sql
+CREATE TABLE IF NOT EXISTS users_by_city (
+ city      text,
+ firstname text,
+ lastname  text,
+ email     text,
+ PRIMARY KEY ((city), lastname, email)
+) WITH CLUSTERING ORDER BY(lastname ASC, email ASC);
+
+```
+- *Insert some entries*
 
 ```sql
 INSERT INTO users_by_city(city, firstname, lastname, email) 
@@ -199,31 +203,44 @@ tracing off;
 
 [🏠 Back to Table of Contents](#table-of-content)
 
-## 3. Working with REST API
+## 3. Document Databases
 
-To use the API we will need a token please create a token following the instructions here:
+Let's do some hands-on with document database queries.
+
+> **Document databases** expand on the basic idea of key-value stores where “documents” are more complex, in that they contain data and each document is assigned a unique key, which is used to retrieve the document. These are designed for storing, retrieving, and managing document-oriented information, often stored as JSON. Since the Document database can inspect the document contents, the database can perform some additional retrieval processing. Unlike RDBMSs which require a static schema, Document databases have a flexible schema as defined by the document contents. Examples include: MongoDB and CouchDB. Note that some RDBMS and NoSQL databases outside of pure document stores are able to store and query JSON documents, including Cassandra.
+
+**✅ 3a. Cassandra knows JSON** :
+
+- *Insert data into Cassandra with JSON*
+
+It is not know enough but Cassandra accept JSON out of the box. You can find more information [here](https://docs.datastax.com/en/cql-oss/3.3/cql/cql_using/useInsertJSON.html)
+
+```sql
+INSERT INTO videos JSON '{
+   "videoid":"e466f561-4ea4-4eb7-8dcc-126e0fbfd578",
+     "email":"clunven@sample.com",
+     "title":"A JSON videos",
+     "upload":"2020-02-26 15:09:22 +00:00",
+     "url": "http://google.fr",
+     "frames": [1,2,3,4],
+     "tags":   [ "cassandra","accelerate", "2020"]
+}';
+```
+
+- *Retrieve data from Cassandra as JSON*
+
+In the same way you can retrieve JSON out of Cassandra ([more info here](https://docs.datastax.com/en/cql-oss/3.3/cql/cql_using/useQueryJSON.html))
+
+```sql
+select json title,url,tags from videos;
+```
+
+![image](images/04.png?raw=true)
 
 ✅ [Create a token for your app](https://docs.datastax.com/en/astra/docs/manage-application-tokens.html) to use in the settings screen
 
 Copy the token value (eg `AstraCS:KDfdKeNREyWQvDpDrBqwBsUB:ec80667c....`) in your clipboard and save the CSV this value would not be provided afterward.
 
-- Insert Value using JSON
-
-```sql
-INSERT INTO videos JSON '{
-   "videoid":"e466f561-4ea4-4eb7-8dcc-126e0fbfd573",
-     "email":"clunven@sample.com",
-     "title":"A Second videos",
-     "upload":"2020-02-26 15:09:22 +00:00",
-     "url": "http://google.fr",
-     "frames": [1,2,3,4],
-     "tags":   [ "cassandra","accelerate", "2020"],
-     "formats": { 
-        "mp4": {"width":1,"height":1},
-        "ogg": {"width":1,"height":1}
-     }
-}';
-```
 
 **👁️ Expected output**
 ![image](pics/astra-token.png?raw=true)

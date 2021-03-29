@@ -1,0 +1,48 @@
+version: '2'
+services:
+
+  # ----------------------------------------
+  # DataStax Enterprise
+  # ----------------------------------------
+  dse:
+    image: datastax/dse-server:6.8.10
+    command: [ -s -g -k ]
+    ports:
+      - "9042:9042"
+      - "8983:8983"
+      - "8182:8182"
+    depends_on:
+       - opscenter
+    environment:
+      - DS_LICENSE=accept
+      - DC=DC1
+      - JVM_EXTRA_OPTS=-Xmx1g -Xms1g
+      - NUM_TOKENS=32
+    cap_add:
+      - IPC_LOCK
+    ulimits:
+      memlock: -1
+
+  # ----------------------------------------
+  # DataStax Studio
+  # ----------------------------------------
+  studio:
+     image: datastax/dse-studio:6.8.9
+     ports:
+       - "9091:9091"
+     depends_on:
+       - dse
+     environment:
+       DS_LICENSE: accept
+     #volumes:
+       #- "./dse-studio-notebooks:/var/lib/datastax-studio"
+  
+  # ----------------------------------------
+  # OpsCenter 
+  # ----------------------------------------
+  opscenter:
+    image: "datastax/dse-opscenter:6.8.12"
+    ports:
+      - 8888:8888
+    environment:
+      - DS_LICENSE=accept
