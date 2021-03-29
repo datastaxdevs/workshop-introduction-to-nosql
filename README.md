@@ -1,11 +1,20 @@
-## 🎓🔥 STARGATE, a gateway for multi models data API 🔥🎓
+## 🎓🔥 Introduction to NotOnly SQL Databases
 
 [![License Apache2](https://img.shields.io/hexpm/l/plug.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Discord](https://img.shields.io/discord/685554030159593522)](https://discord.com/widget?id=685554030159593522&theme=dark)
 
-![image](pics/splash.png?raw=true)
+![image](images/splash.png?raw=true)
 
-This intructions will lead you to step by step operations for the workshop on ASTRA + STARGATE for ApiDays Helsinki
+This intructions will lead you to step by step operations for the workshop introducing the NoSQL Databases technologies. 
+
+It doesn't matter if you join our workshop live or you prefer to do at your own pace, we have you covered. In this repository, you'll find everything you need for this workshop:
+
+## Materials used during presentations
+
+- [Workshop video](#)
+- [Slide deck](#)
+- [Discord chat](https://bit.ly/cassandra-workshop)
+- [Questions and Answers](https://community.datastax.com/)
 
 ## Table of content
 
@@ -17,7 +26,7 @@ This intructions will lead you to step by step operations for the workshop on AS
 
 ## 1. Create Astra Instance
 
-**`ASTRA`** is the simplest way to run Cassandra with zero operations at all - just push the button and get your cluster. No credit card required, $25.00 USD credit every month, roughly 5M writes, 30M reads, 40GB storage monthly - sufficient to run small production workloads.  
+**`ASTRA`** is the simplest way to run Cassandra with zero operations at all - just push the button and get your cluster. No credit card required, $25.00 USD credit every month, roughly 5M writes, 30M reads, 40GB storage monthly - sufficient to run small production workloads.
 
 ✅ Register (if needed) and Sign In to Astra [https://astra.datastax.com](https://dtsx.io/workshop): You can use your `Github`, `Google` accounts or register with an `email`.
 
@@ -47,54 +56,156 @@ You will see your new database `pending` in the Dashboard.
 
 The status will change to `Active` when the database is ready, this will only take 2-3 minutes. You will also receive an email when it is ready.
 
-## 2. Working with Cassandra
+## 2. Tabular databases
 
-**✅ Check that our keyspace exist**
+In a tabular database we will store ... tables ! The Astra Service is based on Apache Cassandra which is tabular it make sense to start by this one.
 
+**✅ 2a. Describe your Keyspace**
+
+At Database creation you provided a keyspace, a logical grouping for tables let's visualize it. In Astra go to CQL Console to enter the following commands
+
+- *Select your db*
+![image](images/01.png?raw=true)
+
+- *Select CqlConsole*
+![image](images/02.png?raw=true)
+
+- *Enter the command*
 ```sql
 describe keyspaces;
 ```
 
-**✅ Create Entities**
+![image](images/03.png?raw=true)
+
+**✅ 2b. Create tables**
+
+- *Execute the following Cassandra Query Language* 
 
 ```sql
-use keyspace1;
-
-CREATE TYPE IF NOT EXISTS video_format (
-  width   int,
-  height  int
-);
+use nosql1;
 
 CREATE TABLE IF NOT EXISTS videos (
  videoid   uuid,
  title     text,
  upload    timestamp,
- email     text,
  url       text,
  tags      set <text>,
  frames    list<int>,
- formats   map <text,frozen<video_format>>,
  PRIMARY KEY (videoid)
 );
 
-describe keyspace1;
+CREATE TABLE IF NOT EXISTS users_by_city (
+ city      text,
+ firstname text,
+ lastname  text,
+ email     text,
+ PRIMARY KEY ((city), lastname, email)
+) WITH CLUSTERING ORDER BY(lastname ASC, email ASC);
+
 ```
 
-**✅ Use the data model** :
-
-- Insert value using plain CQL
-
+- *Visualize structure*
 ```sql
-INSERT INTO videos(videoid, email, title, upload, url, tags, frames, formats)
-VALUES(uuid(), 'clu@sample.com', 'sample video', 
-     toTimeStamp(now()), 'http://google.fr',
-     { 'cassandra','accelerate','2020'},
-     [ 1, 2, 3, 4], 
-     { 'mp4':{width:1,height:1},'ogg':{width:1,height:1}});
+describe keyspace nosql1;
+```
+
+**✅ 2c. Workshing with DATA** :
+
+- *Insert some entries on first table*
+```sql
+INSERT INTO videos(videoid, email, title, upload, url, tags, frames)
+VALUES(uuid(), 
+     'clu@sample.com', 
+     'Introduction to Nosql Databases', 
+     toTimeStamp(now()), 
+     'https://www.youtube.com/watch?v=cMDHxsGbmC8',
+     { 'nosql','workshop','2021'}, 
+     [ 1, 2, 3, 4]});
      
 INSERT INTO videos(videoid, email, title, upload, url)
-VALUES(uuid(), 'clu@sample.com', 'video2', toTimeStamp(now()), 'http://google.fr');
+VALUES(uuid(), 
+      'clu@sample.com', 
+      'Demo video Y', 
+      toTimeStamp(now()), 
+      'https://www.youtube.com/watch?v=XXXX');
+
+INSERT INTO videos(videoid, email, title, upload, url)
+VALUES(e466f561-4ea4-4eb7-8dcc-126e0fbfd573, 
+      'clu@sample.com', 
+      'Yet another video', 
+      toTimeStamp(now()), 
+      'https://www.youtube.com/watch?v=ABCDE');
 ```
+
+- *Read values*
+
+```sql
+select * from videos;
+```
+
+- *Read by id*
+
+```sql
+select * from videos 
+where videoid=e466f561-4ea4-4eb7-8dcc-126e0fbfd573;
+```
+
+**✅ 2d. Workshing with PARTITIONS** :
+
+But data can be grouped, we stored together what should be retrieved together.
+
+- *Insert some entries on second table*
+
+```sql
+INSERT INTO users_by_city(city, firstname, lastname, email) 
+VALUES('PARIS', 'Lunven', 'Cedrick', 'clu@sample.com');
+
+INSERT INTO users_by_city(city, firstname, lastname, email) 
+VALUES('PARIS', 'Yellow', 'Jackets', 'yj@sample.com');
+
+INSERT INTO users_by_city(city, firstname, lastname, email) 
+VALUES('ORLANDO', 'David', 'Gilardi', 'dgi@sample.com');
+```
+
+- *List values with partitions keys*
+
+```sql
+SELECT * from users_by_city WHERE city='PARIS';
+```
+
+- *List values without parititions keys*
+```sql
+SELECT * from users_by_city WHERE lastname='Gilardi';
+```
+
+**`Yes we know`** and we will explain why.
+
+- *Same query with debugging enabled*
+
+```sql
+tracing on;
+SELECT * from users_by_city WHERE city='PARIS';
+```
+
+- *Forcing Full Scan = SLOW*
+```sql
+SELECT * from users_by_city WHERE lastname='Gilardi' ALLOW FILTERING;
+```
+
+- *Stop debugging*
+```sql
+tracing off;
+```
+
+[🏠 Back to Table of Contents](#table-of-content)
+
+## 3. Working with REST API
+
+To use the API we will need a token please create a token following the instructions here:
+
+✅ [Create a token for your app](https://docs.datastax.com/en/astra/docs/manage-application-tokens.html) to use in the settings screen
+
+Copy the token value (eg `AstraCS:KDfdKeNREyWQvDpDrBqwBsUB:ec80667c....`) in your clipboard and save the CSV this value would not be provided afterward.
 
 - Insert Value using JSON
 
@@ -113,27 +224,6 @@ INSERT INTO videos JSON '{
      }
 }';
 ```
-
-- Read values
-
-```sql
-select * from videos;
-```
-
-- Read by id
-```sql
-select * from videos where videoid=e466f561-4ea4-4eb7-8dcc-126e0fbfd573;
-```
-
-[🏠 Back to Table of Contents](#table-of-content)
-
-## 3. Working with REST API
-
-To use the API we will need a token please create a token following the instructions here:
-
-✅ [Create a token for your app](https://docs.datastax.com/en/astra/docs/manage-application-tokens.html) to use in the settings screen
-
-Copy the token value (eg `AstraCS:KDfdKeNREyWQvDpDrBqwBsUB:ec80667c....`) in your clipboard and save the CSV this value would not be provided afterward.
 
 **👁️ Expected output**
 ![image](pics/astra-token.png?raw=true)
