@@ -1,18 +1,21 @@
 version: '2'
-services:
 
+networks:
+  graph:
+    external: true
+
+services:
   # ----------------------------------------
   # DataStax Enterprise
   # ----------------------------------------
   dse:
     image: datastax/dse-server:6.8.10
-    command: [ -s -g -k ]
+    command: [ -g ]
     ports:
       - "9042:9042"
       - "8983:8983"
       - "8182:8182"
-    depends_on:
-       - opscenter
+      - "8183:8183"
     environment:
       - DS_LICENSE=accept
       - DC=DC1
@@ -22,7 +25,11 @@ services:
       - IPC_LOCK
     ulimits:
       memlock: -1
-
+    networks:
+      - graph
+    # Specify the container name explicitly to avoid getting underscores (see note above)
+    container_name: dse
+    
   # ----------------------------------------
   # DataStax Studio
   # ----------------------------------------
@@ -36,13 +43,5 @@ services:
        DS_LICENSE: accept
      #volumes:
        #- "./dse-studio-notebooks:/var/lib/datastax-studio"
-  
-  # ----------------------------------------
-  # OpsCenter 
-  # ----------------------------------------
-  opscenter:
-    image: "datastax/dse-opscenter:6.8.12"
-    ports:
-      - 8888:8888
-    environment:
-      - DS_LICENSE=accept
+     networks:
+       - graph
