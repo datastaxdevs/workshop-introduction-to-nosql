@@ -23,7 +23,6 @@ It doesn't matter if you join our workshop live or you prefer to do at your own 
 3. [Document Databases](#3-document-databases)
 4. [Key-Value Databases](#4-keyvalue-databases)
 5. [Graph Databases](#5-graph-databases)
-6. [TimeSeries Databases](#-working-with-document-api)
 
 ## 1. Create Astra Instance
 
