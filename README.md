@@ -212,9 +212,9 @@ Let's do some hands-on with document database queries.
 
 **✅ 3a. Cassandra knows JSON** :
 
-- *Insert data into Cassandra with JSON*
+It is not a known fact but Cassandra accepts JSON query out of the box. You can find more information [here](https://docs.datastax.com/en/cql-oss/3.3/cql/cql_using/useInsertJSON.html)
 
-It is not know enough but Cassandra accept JSON out of the box. You can find more information [here](https://docs.datastax.com/en/cql-oss/3.3/cql/cql_using/useInsertJSON.html)
+- *Insert data into Cassandra with JSON*
 
 ```sql
 INSERT INTO videos JSON '{
@@ -228,9 +228,9 @@ INSERT INTO videos JSON '{
 }';
 ```
 
-- *Retrieve data from Cassandra as JSON*
-
 In the same way you can retrieve JSON out of Cassandra ([more info here](https://docs.datastax.com/en/cql-oss/3.3/cql/cql_using/useQueryJSON.html))
+
+- *Retrieve data from Cassandra as JSON*
 
 ```sql
 select json title,url,tags from videos;
@@ -238,7 +238,7 @@ select json title,url,tags from videos;
 
 ![image](images/04.png?raw=true)
 
-**✅ 3b Create your Application token** :
+**✅ 3b. Create your Application token** :
 
 Use this [documentation](https://docs.datastax.com/en/astra/docs/manage-application-tokens.html) to create your application token. Copy the token value in a text file somewhere we will reuse it a lot 
 
@@ -251,43 +251,145 @@ This walkthrough has been realized using the [Quick Start](https://stargate.io/d
 
 locate the Document part in the Swagger UI
 
-![image](pics/swagger-docs.png?raw=true)
+![image](images/05.png?raw=true)
 
+**✅ 3c. Creating a namespace** :
 
-**✅ Creating a namespace** :
-
-- Access [createNamespace]
+- Access ***Create a namespace***
+- Click `Try it out` button
 - Fill with Header `X-Cassandra-Token` with `<your_token>`
 - Use this payload as JSON
 ```json
 { "name": "namespace1", "replicas": 3 }
 ```
 
-**✅ Checking namespace existence** :
+**✅ 3d. Checking namespace existence** :
 
-- Access [getAllNamespaces]
-- Fill with Header `X-Cassandra-Token` with `<your_token>`
+- Access **[getAllNamespaces]**
+- Click `Try it out` button
+- Fill Header `X-Cassandra-Token` with `<your_token>`
 - For `raw` you can use either `true` or `false`
 
 **👁️ Expected output**
 ```json
 {
   "data": [
-    { "name": "system_distributed" },
-    { "name": "system" },
-    { "name": "data_endpoint_auth"},
-    { "name": "keyspace1" },
-    { "name": "namespace1"},
-    { "name": "system_schema"},
-    { "name": "keyspace2" },
-    { "name": "stargate_system"},
-    { "name": "system_auth" },
-    { "name": "system_traces"}
+    {
+      "name": "system_traces",
+      "datacenters": [
+        {
+          "name": "europe-west1",
+          "replicas": 3
+        }
+      ]
+    },
+    {
+      "name": "system_auth",
+      "datacenters": [
+        {
+          "name": "europe-west1",
+          "replicas": 3
+        }
+      ]
+    },
+    {
+      "name": "data_endpoint_auth",
+      "datacenters": [
+        {
+          "name": "europe-west1",
+          "replicas": 3
+        }
+      ]
+    },
+    {
+      "name": "61316435303532362d316634622d346361382d613264322d643130633261316130313138_data_endpoint_auth",
+      "datacenters": [
+        {
+          "name": "europe-west1",
+          "replicas": 3
+        }
+      ]
+    },
+    {
+      "name": "datastax_sla",
+      "datacenters": [
+        {
+          "name": "europe-west1",
+          "replicas": 3
+        }
+      ]
+    },
+    {
+      "name": "61316435303532362d316634622d346361382d613264322d643130633261316130313138_datastax_sla",
+      "datacenters": [
+        {
+          "name": "europe-west1",
+          "replicas": 3
+        }
+      ]
+    },
+    {
+      "name": "ns1"
+    },
+    {
+      "name": "61316435303532362d316634622d346361382d613264322d643130633261316130313138_ns1"
+    },
+    {
+      "name": "nosql1",
+      "datacenters": [
+        {
+          "name": "europe-west1",
+          "replicas": 3
+        }
+      ]
+    },
+    {
+      "name": "61316435303532362d316634622d346361382d613264322d643130633261316130313138_nosql1",
+      "datacenters": [
+        {
+          "name": "europe-west1",
+          "replicas": 3
+        }
+      ]
+    },
+    {
+      "name": "namespace1"
+    },
+    {
+      "name": "61316435303532362d316634622d346361382d613264322d643130633261316130313138_namespace1"
+    },
+    {
+      "name": "system"
+    },
+    {
+      "name": "system_schema"
+    }
   ]
 }
 ```
 
-**✅ Create a document** :
+**✅ 3e Create a new empty collection** :
+
+- Access ***Create a new empty collection in a namespace***
+- Click `Try it out` button
+- Fill Header `X-Cassandra-Token` with `<your_token>`
+- For `namespace-id` use `namespace1`
+- For `body` use 
+
+```json
+{ "name": "col1" }
+```
+
+You will get a 201 returned code
+
+**✅ 3f. Create a new document** :
+
+- Access ***Create a new document***
+- Click `Try it out` button
+- Fill with Header `X-Cassandra-Token` with `<your_token>`
+- For `namespace-id` use `namespace1`
+- For `collection-id` use `col1`
+- For `body` use 
 
 ```json
 {
@@ -305,81 +407,133 @@ locate the Document part in the Swagger UI
 }
 ```
 
-**👁️ Expected output**:
+*👁️ Expected output*
 ```json
 {
   "documentId":"5d746e40-97cf-490b-ab0d-68cfbc5d2ef3"
 }
 ```
 
-**✅ Retrieve documents** :
+You can add a couple of documents changing values, new documents with new ids will be generated
 
-```bash
-curl --location \
---request GET 'localhost:8082/v2/namespaces/namespace1/collections/videos?page-size=3' \
---header "X-Cassandra-Token: $AUTH_TOKEN" \
---header 'Content-Type: application/json'
-```
+**✅ 3g Find all documents of a collection** :
 
-**👁️ Expected output**:
-```json
-{
-  "data":{
-    "5d746e40-97cf-490b-ab0d-68cfbc5d2ef3":{
-      "email":"clunven@sample.com",
-      "formats":{"mp4":{"height":1,"width":1},"ogg":{"height":1,"width":1}},"frames":[1,2,3,4],
-      "tags":["cassandra","accelerate","2020"],"title":"A Second videos","upload":"2020-02-26 15:09:22 +00:00","url":"http://google.fr","videoid":"e466f561-4ea4-4eb7-8dcc-126e0fbfd573"
-     }
-   }
-}
-```
+- Access ***Search documents in a collection***
+- Click `Try it out` button
+- Fill Header `X-Cassandra-Token` with `<your_token>`
+- For `namespace-id` use `namespace1`
+- For `collection-id` use `col1`
 
-**✅ Retrieve 1 document** :
-
-```bash
-curl -L \
--X GET 'localhost:8082/v2/namespaces/namespace1/collections/videos/5d746e40-97cf-490b-ab0d-68cfbc5d2ef3' \
---header "X-Cassandra-Token: $AUTH_TOKEN" \
---header 'Content-Type: application/json'
-```
+Let other fields blank every query is paged in Cassandra.
 
 **👁️ Expected output**:
 ```json
 {
-  "documentId":"5d746e40-97cf-490b-ab0d-68cfbc5d2ef3",
-  "data":{
-     "email":"clunven@sample.com",
-     "formats":{"mp4":{"height":1,"width":1},"ogg":{"height":1,"width":1}},
-     "frames":[1,2,3,4],
-     "tags":["cassandra","accelerate","2020"],
-     "title":"A Second videos",
-     "upload":"2020-02-26 15:09:22 +00:00",
-     "url":"http://google.fr",
-     "videoid":"e466f561-4ea4-4eb7-8dcc-126e0fbfd573"
-   }
-}
+  "data": {
+    "84bd6ebc-a274-4dc3-ae7c-eb2fd913331b": {
+      "email": "clunven@sample.com",
+      "formats": {
+        "mp4": {
+          "height": 1,
+          "width": 1
+        },
+        "ogg": {
+          "height": 1,
+          "width": 1
+        }
+      },
+      "frames": [
+        1,
+        2,
+        3,
+        4
+        ...
 ```
 
-**✅ Search for document by properties** :
+**✅ 3g Retrieve a document from its id** :
 
-```JSON
-{"email":
-   { "$eq":"clunven@sample.com" }
-} 
-```
+- Access ***SGet a document***
+- Click `Try it out` button
+- Fill Header `X-Cassandra-Token` with `<your_token>`
+- For `namespace-id` use `namespace1`
+- For `collection-id` use `col1`
+- For `document-id` use `<doc_id_in_previous_call>`
 
 **👁️ Expected output**:
 ```json
-{"data":{
-   "5d746e40-97cf-490b-ab0d-68cfbc5d2ef3":{
-      "email":"clunven@sample.com",
-      "formats":{"mp4":{"height":1,"width":1},"ogg":{"height":1,"width":1}},
-      "frames":[1,2,3,4],
-      "tags":["cassandra","accelerate","2020"],
-      "title":"A Second videos",
-      "upload":"2020-02-26 15:09:22 +00:00",
-      "url":"http://google.fr",
-      "videoid":"e466f561-4ea4-4eb7-8dcc-126e0fbfd573"
+{
+  "documentId": "84bd6ebc-a274-4dc3-ae7c-eb2fd913331b",
+  "data": {
+    "email": "clunven@sample.com",
+    "formats": {
+      "mp4": {
+        "height": 1,
+        "width": 1
+      },
+      "ogg": {
+        "height": 1,
+        "width": 1
+      }
+    },
+    "frames": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "tags": [
+      "cassandra",
+      "accelerate",
+      "2020"
+    ],
+    "title": "A Second videos",
+    "upload": "2020-02-26 15:09:22 +00:00",
+    "url": "http://google.fr",
+    "videoid": "e466f561-4ea4-4eb7-8dcc-126e0fbfd573"
+  }
+}
+```
+
+**✅ 3h Search document from a where clause** :
+
+- Access ***Search documents in a collection***
+- Click `Try it out` button
+- Fill Header `X-Cassandra-Token` with `<your_token>`
+- For `namespace-id` use `namespace1`
+- For `collection-id` use `col1`
+- For `where` use `{"email":    { "$eq":"clunven@sample.com" } } `
+
+*👁️ Expected output*
+```json
+{
+  "data": {
+    "84bd6ebc-a274-4dc3-ae7c-eb2fd913331b": {
+      "email": "clunven@sample.com",
+      "formats": {
+        "mp4": {
+          "height": 1,
+          "width": 1
+        },
+        "ogg": {
+          "height": 1,
+          "width": 1
+        }
+      },
+      "frames": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "tags": [
+        "cassandra",
+        "accelerate",
+        "2020"
+      ],
+      "title": "A Second videos",
+      "upload": "2020-02-26 15:09:22 +00:00",
+      "url": "http://google.fr",
+      "videoid": "e466f561-4ea4-4eb7-8dcc-126e0fbfd573"
     }
   }
 }
@@ -389,9 +543,18 @@ curl -L \
 
 ## 4. KeyValue Databases
 
+
+> **Key/Value databases** are some of the least complex as all of the data within consists of an indexed key and a value. Key-value databases use a hashing mechanism such that given a key, the database can quickly retrieve an associated value. Hashing mechanisms provide constant time access, which means they maintain high performance even at large scale. The keys can be any type of object, but are typically a string. The values are generally opaque blobs (i.e., a sequence of bytes that the database does not interpret). Examples include: Redis, Amazon DynamoDB, Riak, and Oracle NoSQL database. Some tabular NoSQL databases, like Cassandra, can also service key/value needs.
+
+ssss
+
+
+
 [🏠 Back to Table of Contents](#table-of-content)
 
 ## 5. Graph Databases
+
+> **Graph databases** store their data using a graph metaphor to exploit the relationships between data. Nodes in the graph represent data items, and edges represent the relationships between the data items. Graph databases are designed for highly complex and connected data, which outpaces the relationship and JOIN capabilities of an RDBMS. Graph databases are often exceptionally good at finding commonalities and anomalies among large data sets. Examples of Graph databases include DataStax Graph, Neo4J, JanusGraph, and Amazon Neptune.
 
 Astra does not contain yet a way to implement Graph Databases use cases. But at Datastax Companny we do have a product called [DataStax Graph](https://www.datastax.com/products/datastax-graph) that you can use for free when not in production.
 
