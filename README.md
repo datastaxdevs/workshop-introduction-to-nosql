@@ -247,9 +247,13 @@ Use this [documentation](https://docs.datastax.com/en/astra/docs/manage-applicat
 AstraCS:KDfdKeNREyWQvDpDrBqwBsUB:ec80667c....
 ```
 
+![image](images/token.png?raw=true)
+
 This walkthrough has been realized using the [Quick Start](https://stargate.io/docs/stargate/1.0/quickstart/quick_start-document.html)
 
-locate the Document part in the Swagger UI
+Next go the connect page, locate the SWAGGER URL and then locate the Document part in the Swagger UI.
+
+![image](images/connect.png?raw=true)
 
 ![image](images/05.png?raw=true)
 
