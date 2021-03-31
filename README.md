@@ -727,34 +727,43 @@ Creating workshop-introduction-to-nosql_studio_1 ... done
 ```
 Wait for the application to start (30s) and open [http:://localhost:9091](http:://localhost:9091)
 
+
 ![image](images/studio_home.png?raw=true)
 
 **✅ 5e.Check database connection**
 
 Open the ellipsis and click `Connections`
+
 ![image](images/studio_test_connection1.png?raw=true)
 
 Select the `default localhost` connection
+
 ![image](images/studio_test_connection2.png?raw=true)
 
 Check that `dse` is set for the host (pointing to a local cassandra)
+
 ![image](images/studio_test_connection3.png?raw=true)
 
 Click the button `Test` and expect the output `Connected Successfully`
+
 ![image](images/studio_test_connection4.png?raw=true)
 
 **✅ 5f. Open the notebook Work**
 
 Use the ellipsis to now select `Notebooks`
+
 ![image](images/studio_home.png?raw=true)
 
 Once the notebook open it has you to creat the graph click `Create` button
+
 ![image](images/studio_create_graph.png?raw=true)
 
 Execute cell after call spotting the `Real Time >` button in each cell (top right) 
+
 ![image](images/studio_notebook_1.png?raw=true)
 
 Voila ! 
+
 ![image](images/studio_notebook_2.png?raw=true)
 
 **✅ 5g. Close Notebook**
