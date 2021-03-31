@@ -3,7 +3,7 @@
 [![License Apache2](https://img.shields.io/hexpm/l/plug.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Discord](https://img.shields.io/discord/685554030159593522)](https://discord.com/widget?id=685554030159593522&theme=dark)
 
-![image](images/splash.png?raw=true)
+![image](images/splash.jpeg?raw=true)
 
 This intructions will lead you to step by step operations for the workshop introducing the NoSQL Databases technologies. 
 
@@ -19,10 +19,11 @@ It doesn't matter if you join our workshop live or you prefer to do at your own 
 ## Table of content
 
 1. [Create Astra Instance](#1-create-astra-instance)
-2. [Working with Cassandra](#2-working-with-cassandra)
-3. [Working with REST API](#3-working-with-rest-api)
-4. [Working with DOCUMENT API](#4-working-with-document-api)
-5. [Working with GRAPHQL API](#5-working-with-graphql-api)
+2. [Tabular Databases](#2-tabular-databases)
+3. [Document Databases](#3-document-databases)
+4. [Key-Value Databases](#4-keyvalue-databases)
+5. [Graph Databases](#5-graph-databases)
+6. [TimeSeries Databases](#-working-with-document-api)
 
 ## 1. Create Astra Instance
 
