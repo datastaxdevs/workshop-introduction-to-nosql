@@ -88,6 +88,7 @@ use nosql1;
 
 CREATE TABLE IF NOT EXISTS videos (
  videoid   uuid,
+ email     text,
  title     text,
  upload    timestamp,
  url       text,
@@ -113,7 +114,7 @@ VALUES(uuid(),
      toTimeStamp(now()), 
      'https://www.youtube.com/watch?v=cMDHxsGbmC8',
      { 'nosql','workshop','2021'}, 
-     [ 1, 2, 3, 4]});
+     [ 1, 2, 3, 4]);
      
 INSERT INTO videos(videoid, email, title, upload, url)
 VALUES(uuid(), 
