@@ -550,7 +550,16 @@ Let other fields blank every query is paged in Cassandra.
 
 > **Key/Value databases** are some of the least complex as all of the data within consists of an indexed key and a value. Key-value databases use a hashing mechanism such that given a key, the database can quickly retrieve an associated value. Hashing mechanisms provide constant time access, which means they maintain high performance even at large scale. The keys can be any type of object, but are typically a string. The values are generally opaque blobs (i.e., a sequence of bytes that the database does not interpret). Examples include: Redis, Amazon DynamoDB, Riak, and Oracle NoSQL database. Some tabular NoSQL databases, like Cassandra, can also service key/value needs.
 
-ssss
+**✅ 4a. Create a key/value table with GraphQL play ground** :
+
+
+
+**✅ 4b. Insert multiple values there** :
+
+**✅ 4c. Retrive value in the table** :
+
+**✅ 4d. Check values with CQLSH** :
+
 
 
 
