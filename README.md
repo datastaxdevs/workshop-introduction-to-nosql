@@ -456,7 +456,7 @@ Let other fields blank every query is paged in Cassandra.
 
 **✅ 3g Retrieve a document from its id** :
 
-- Access ***SGet a document***
+- Access ***Get a document***
 - Click `Try it out` button
 - Fill Header `X-Cassandra-Token` with `<your_token>`
 - For `namespace-id` use `namespace1`
