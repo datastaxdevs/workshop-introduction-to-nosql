@@ -144,7 +144,7 @@ select * from videos
 where videoid=e466f561-4ea4-4eb7-8dcc-126e0fbfd573;
 ```
 
-**✅ 2d. Workshing with PARTITIONS** :
+**✅ 2d. Working with PARTITIONS** :
 
 But data can be grouped, we stored together what should be retrieved together.
 
