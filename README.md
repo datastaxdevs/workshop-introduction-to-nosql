@@ -251,9 +251,11 @@ AstraCS:KDfdKeNREyWQvDpDrBqwBsUB:ec80667c....
 
 This walkthrough has been realized using the [Quick Start](https://stargate.io/docs/stargate/1.0/quickstart/quick_start-document.html)
 
-Next go the connect page, locate the SWAGGER URL and then locate the Document part in the Swagger UI.
+Next go the connect page, locate the SWAGGER URL
 
 ![image](images/connect.png?raw=true)
+
+Locate the Document part in the Swagger UI.
 
 ![image](images/05.png?raw=true)
 
@@ -550,18 +552,122 @@ Let other fields blank every query is paged in Cassandra.
 
 > **Key/Value databases** are some of the least complex as all of the data within consists of an indexed key and a value. Key-value databases use a hashing mechanism such that given a key, the database can quickly retrieve an associated value. Hashing mechanisms provide constant time access, which means they maintain high performance even at large scale. The keys can be any type of object, but are typically a string. The values are generally opaque blobs (i.e., a sequence of bytes that the database does not interpret). Examples include: Redis, Amazon DynamoDB, Riak, and Oracle NoSQL database. Some tabular NoSQL databases, like Cassandra, can also service key/value needs.
 
-**✅ 4a. Create a key/value table with GraphQL play ground** :
+**✅ 4a. Create a keyspace with GraphQL play ground** :
+
+This walkthrough has been realized using the [GraphQL Quick Start](https://stargate.io/docs/stargate/1.0/quickstart/quick_start-graphql.html)
+
+Open the playground image
+
+![image](images/playground.png?raw=true)
 
 
+Before you can start using the GraphQL API, you must first create a Cassandra keyspace and at least one table in your database. 
 
-**✅ 4b. Insert multiple values there** :
+- *Fill the token in graphQL header*
 
-**✅ 4c. Retrive value in the table** :
+```json
+{
+  "x-cassandra-token":"AstraCS:fjlsgehrre;ge"
+}
+```
 
-**✅ 4d. Check values with CQLSH** :
+*Expected output*
+![image](images/playground1.png?raw=true)
 
 
+- Then create new keyspace `nosql3`
 
+```json
+mutation createKeyspaceLibrary {
+  createKeyspace(name:"nosql3", replicas: 3)
+}
+```
+
+👁️ Expected output
+
+![image](images/graphql1.png?raw=true)
+
+**✅ 4b. Create a table with GraphQL**
+
+Use this query
+```json
+mutation {
+  kv: createTable(
+    keyspaceName:"nosql3",
+    tableName:"key_value",
+    partitionKeys: [ # The keys required to access your data
+      { name: "key", type: {basic: TEXT} }
+    ]
+    values: [ # The values associated with the keys
+      { name: "value", type: {basic: TEXT} }
+    ]
+  )
+}
+```
+
+You can check in the CQL COnsole as well;
+
+```sql
+use nosql3
+
+describe keyspace nosql3;
+```
+
+*Expected output*
+
+![image](images/cqlconsole1.png?raw=true)
+
+**✅ 4c. Populate the table**
+
+Any of the created APIs can be used to interact with the GraphQL data, to write or read data.
+
+First, let’s navigate to your new keyspace `nosql3` inside the playground. Change tab to graphql and pick url `/graphql/nosql3.`
+
+- *Fill the header token again*
+```json
+{
+  "x-cassandra-token":"AstraCS:fjlsgehrre;ge"
+}
+```
+
+- *Execute this query*
+```json
+mutation insert2KV {
+  key1: insertkey_value(value: {key:"key1", value:"bbbb"}) {
+    value {
+      key,value
+    }
+  }
+  key2: insertkey_value(value: {key:"key2", value:"bbbb"}) {
+    value {
+      key,value
+    }
+  }
+}
+```
+
+- Check with CQL CConsole
+
+```sql
+select * from key_value;
+```
+
+*Expected output:*
+
+![image](images/graphql2.png?raw=true)
+
+- *Execute this query*
+```json
+mutation insert2KV {
+  key1: insertkey_value(value: {key:"key1", value:"cccc"}) {
+    value {
+      key,value
+    }
+  }
+}
+```
+
+- Check with CQL Console the values should have been updated. Indeed with Cassandra no integrite constraints so you can de-duplicate values easily,
 
 [🏠 Back to Table of Contents](#table-of-content)
 
