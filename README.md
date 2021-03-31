@@ -40,9 +40,9 @@ Follow this [guide](https://docs.datastax.com/en/astra/docs/creating-your-astra-
 
 You will find below which values to enter for each field.
 
-- **For the database name** - `free_db.` While Astra allows you to fill in these fields with values of your own choosing, please follow our recommendations to ensure the application runs properly.
+- **For the database name** - `nosql_db.` While Astra allows you to fill in these fields with values of your own choosing, please follow our recommendations to ensure the application runs properly.
 
-- **For the keyspace name** - `keyspace1`. It's really important that you use the name "free" for the code to work.
+- **For the keyspace name** - `nosql1`. It's really important that you use the name "free" for the code to work.
 
 _You can technically use whatever you want and update the code to reflect the keyspace. This is really to get you on a happy path for the first run._
 
@@ -237,113 +237,14 @@ select json title,url,tags from videos;
 
 ![image](images/04.png?raw=true)
 
-✅ [Create a token for your app](https://docs.datastax.com/en/astra/docs/manage-application-tokens.html) to use in the settings screen
+**✅ 3b Create your Application token** :
 
-Copy the token value (eg `AstraCS:KDfdKeNREyWQvDpDrBqwBsUB:ec80667c....`) in your clipboard and save the CSV this value would not be provided afterward.
+Use this [documentation](https://docs.datastax.com/en/astra/docs/manage-application-tokens.html) to create your application token. Copy the token value in a text file somewhere we will reuse it a lot 
 
-
-**👁️ Expected output**
-![image](pics/astra-token.png?raw=true)
-
-Now launch the swagger UI
-![image](pics/launch-swagger.png?raw=true)
-
-
-**✅ List keyspaces** : 
-
-Locate the `SCHEMAS` part of the API
-
-![image](pics/swagger-schemas.png?raw=true)
-
- Local `listAllKeyspaces`
-
-- Click `Try it out`
-- Provide your token in the field `X-Cassandra-Token`
-- Click on `Execute`
-
-**✅ Creating a keyspace2** : 
-
-- [createKeyspace]
-- Data
-```json
-{"name": "keyspace2","replicas": 3}
+*Astra Token format (do not copy)*
 ```
-
-**✅ Creating a Table** : 
-
-- [addTable]
-- X-Cassandra-Token: `<your_token>`
-- keyspace: `keyspace2`
-- Data
-```json
-{
-  "name": "users",
-  "columnDefinitions":
-    [
-        {
-        "name": "firstname",
-        "typeDefinition": "text"
-      },
-        {
-        "name": "lastname",
-        "typeDefinition": "text"
-      },
-      {
-        "name": "email",
-        "typeDefinition": "text"
-      },
-        {
-        "name": "color",
-        "typeDefinition": "text"
-      }
-    ],
-  "primaryKey":
-    {
-      "partitionKey": ["firstname"],
-      "clusteringKey": ["lastname"]
-    },
-  "tableOptions":
-    {
-      "defaultTimeToLive": 0,
-      "clusteringExpression":
-        [{ "column": "lastname", "order": "ASC" }]
-    }
-}
+AstraCS:KDfdKeNREyWQvDpDrBqwBsUB:ec80667c....
 ```
-
-Now Locate the `DATA` part of the API
-
-**👁️ Expected output**
-![image](pics/astra-data.png?raw=true)
-
-**✅ Insert a row** : 
-
-- [createRow]
-- X-Cassandra-Token: `<your_token>`
-- keyspace: `keyspace2`
-- table: `users`
-- Data
-```json
-{   
- "columns":[
-    {"name":"firstname","value":"Mookie"},
-    {"name":"lastname","value":"Betts"},
-    {"name":"email","value":"mookie.betts@gmail.com"},
-    {"name":"color","value":"blue"}
- ]
-}
-```
-
-**✅ Read data** : 
-
-- [getAllRows]
-- X-Cassandra-Token: `<your_token>`
-- keyspace: `keyspace2`
-- table: `users`
-
-[🏠 Back to Table of Contents](#table-of-content)
-
-## 4. Working with DOCUMENT API
 
 This walkthrough has been realized using the [Quick Start](https://stargate.io/docs/stargate/1.0/quickstart/quick_start-document.html)
 
@@ -491,8 +392,104 @@ curl -L \
 
 ## 5. Graph Databases
 
-[🏠 Back to Table of Contents](#table-of-content)
+Astra does not contain yet a way to implement Graph Databases use cases. But at Datastax Companny we do have a product called [DataStax Graph](https://www.datastax.com/products/datastax-graph) that you can use for free when not in production.
 
+Today it will be a demo to be quick but you can as well do and start the demo with the following steps
+
+**✅ 5a. Prerequisites**
+
+**Minimal Configuration**: You need to have a computer with this minimal configuration requirements
+- At least 2CPU
+- At least 3GB or RAM
+
+**Install Docker and Docker Compose**
+
+You tneed to install Docker and Docker-compose on your machine
+- [Install **Docker** for Windows/Mac/Linux](https://github.com/DataStax-Academy/kubernetes-workshop-online/blob/master/0-setup-your-cluster/README.MD#1-install-docker)
+- [Install **Docker-Compose**  for Windows/Mac/Linux](https://github.com/DataStax-Academy/kubernetes-workshop-online/blob/master/0-setup-your-cluster/README.MD#2-install-docker-compose)
+
+**✅ 5b. Create a docker network named 'graph'**
+
+```bash
+docker network create graph
+```
+
+🖥️ *Expected output*
+```bash
+$workshop_introduction_to_nosql> docker network create graph
+
+64f8bcc2dda416d6dc80ef3c1ac97902b9d90007842808308e9d741d179d9344
+```
+
+**✅ 5c.Clone this repository (or download ZIP from the github UI)**
+
+```bash
+git clone https://github.com/datastaxdevs/workshop-introduction-to-nosql.git
+
+cd workshop-introduction-to-nosql
+```
+
+**✅ 5d.Start the containers**
+
+```bash
+docker-compose up -d
+```
+
+🖥️ *Expected output*
+```bash
+$workshop_introduction_to_nosql> docker-compose up -d
+
+Creating dse ... done
+Creating workshop-introduction-to-nosql_studio_1 ... done
+```
+Wait for the application to start (30s) and open [http:://localhost:9091](http:://localhost:9091)
+
+![image](images/studio_home.png?raw=true)
+
+**✅ 5e.Check database connection**
+
+Open the ellipsis and click `Connections`
+![image](images/studio_test_connection1.png?raw=true)
+
+Select the `default localhost` connection
+![image](images/studio_test_connection2.png?raw=true)
+
+Check that `dse` is set for the host (pointing to a local cassandra)
+![image](images/studio_test_connection3.png?raw=true)
+
+Click the button `Test` and expect the output `Connected Successfully`
+![image](images/studio_test_connection4.png?raw=true)
+
+**✅ 5f. Open the notebook Work**
+
+Use the ellipsis to now select `Notebooks`
+![image](images/studio_home.png?raw=true)
+
+Once the notebook open it has you to creat the graph click `Create` button
+![image](images/studio_create_graph.png?raw=true)
+
+Execute cell after call spotting the `Real Time >` button in each cell (top right) 
+![image](images/studio_notebook_1.png?raw=true)
+
+Voila ! 
+![image](images/studio_notebook_2.png?raw=true)
+
+**✅ 5g. Close Notebook**
+
+To close open notebooks you can now use
+
+```bash
+docker-compose down
+```
+
+🖥️ *Expected output*
+```bash
+$workshop_introduction_to_nosql> docker-compose down
+Stopping workshop-introduction-to-nosql_studio_1 ... done
+Stopping dse                                     ... 
+```
+
+[🏠 Back to Table of Contents](#table-of-content)
 
 ## THE END
 

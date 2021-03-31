@@ -41,7 +41,7 @@ services:
        - dse
      environment:
        DS_LICENSE: accept
-     #volumes:
-       #- "./dse-studio-notebooks:/var/lib/datastax-studio"
+     volumes:
+       - "./datastax-studio-config:/var/lib/datastax-studio"
      networks:
        - graph
