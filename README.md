@@ -605,7 +605,7 @@ mutation {
 }
 ```
 
-You can check in the CQL COnsole as well;
+You can check in the CQL Console as well;
 
 ```sql
 use nosql3
@@ -646,7 +646,7 @@ mutation insert2KV {
 }
 ```
 
-- Check with CQL CConsole
+- Check with CQL Console
 
 ```sql
 select * from key_value;
@@ -654,7 +654,7 @@ select * from key_value;
 
 *Expected output:*
 
-![image](images/graphql2.png?raw=true)
+![image](images/graphql2.png?raw=true)f
 
 - *Execute this query*
 ```json
