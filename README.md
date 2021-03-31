@@ -12,7 +12,7 @@ This intructions will lead you to step by step operations for the workshop intro
 It doesn't matter if you join our workshop live or you prefer to do at your own pace, we have you covered. In this repository, you'll find everything you need for this workshop:
 
 - [Workshop video](#)
-- [Slide deck](#)
+- [Slide deck](./slides.pdf)
 - [Discord chat](https://bit.ly/cassandra-workshop)
 - [Questions and Answers](https://community.datastax.com/)
 
