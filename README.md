@@ -16,7 +16,7 @@ It doesn't matter if you join our workshop live or you prefer to do at your own 
 - [Discord chat](https://bit.ly/cassandra-workshop)
 - [Questions and Answers](https://community.datastax.com/)
 
-## Partitipation Certificate
+## Partitipation Certificate / Homework
 
 To get the participation certificate, you have to complete following steps:
 
