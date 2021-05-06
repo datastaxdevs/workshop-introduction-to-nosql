@@ -259,127 +259,12 @@ Locate the Document part in the Swagger UI.
 
 ![image](images/05.png?raw=true)
 
-**✅ 3c. Creating a namespace** :
-
-- Access ***Create a namespace***
-- Click `Try it out` button
-- Fill with Header `X-Cassandra-Token` with `<your_token>`
-- Use this payload as JSON
-```json
-{ "name": "namespace1", "replicas": 3 }
-```
-
-**✅ 3d. Checking namespace existence** :
-
-- Access **[getAllNamespaces]**
-- Click `Try it out` button
-- Fill Header `X-Cassandra-Token` with `<your_token>`
-- For `raw` you can use either `true` or `false`
-
-**👁️ Expected output**
-```json
-{
-  "data": [
-    {
-      "name": "system_traces",
-      "datacenters": [
-        {
-          "name": "europe-west1",
-          "replicas": 3
-        }
-      ]
-    },
-    {
-      "name": "system_auth",
-      "datacenters": [
-        {
-          "name": "europe-west1",
-          "replicas": 3
-        }
-      ]
-    },
-    {
-      "name": "data_endpoint_auth",
-      "datacenters": [
-        {
-          "name": "europe-west1",
-          "replicas": 3
-        }
-      ]
-    },
-    {
-      "name": "61316435303532362d316634622d346361382d613264322d643130633261316130313138_data_endpoint_auth",
-      "datacenters": [
-        {
-          "name": "europe-west1",
-          "replicas": 3
-        }
-      ]
-    },
-    {
-      "name": "datastax_sla",
-      "datacenters": [
-        {
-          "name": "europe-west1",
-          "replicas": 3
-        }
-      ]
-    },
-    {
-      "name": "61316435303532362d316634622d346361382d613264322d643130633261316130313138_datastax_sla",
-      "datacenters": [
-        {
-          "name": "europe-west1",
-          "replicas": 3
-        }
-      ]
-    },
-    {
-      "name": "ns1"
-    },
-    {
-      "name": "61316435303532362d316634622d346361382d613264322d643130633261316130313138_ns1"
-    },
-    {
-      "name": "nosql1",
-      "datacenters": [
-        {
-          "name": "europe-west1",
-          "replicas": 3
-        }
-      ]
-    },
-    {
-      "name": "61316435303532362d316634622d346361382d613264322d643130633261316130313138_nosql1",
-      "datacenters": [
-        {
-          "name": "europe-west1",
-          "replicas": 3
-        }
-      ]
-    },
-    {
-      "name": "namespace1"
-    },
-    {
-      "name": "61316435303532362d316634622d346361382d613264322d643130633261316130313138_namespace1"
-    },
-    {
-      "name": "system"
-    },
-    {
-      "name": "system_schema"
-    }
-  ]
-}
-```
-
-**✅ 3e Create a new empty collection** :
+**✅ 3c Create a new empty collection** :
 
 - Access ***Create a new empty collection in a namespace***
 - Click `Try it out` button
 - Fill Header `X-Cassandra-Token` with `<your_token>`
-- For `namespace-id` use `namespace1`
+- For `namespace-id` use `nosql1`
 - For `body` use 
 
 ```json
@@ -388,12 +273,12 @@ Locate the Document part in the Swagger UI.
 
 You will get a 201 returned code
 
-**✅ 3f. Create a new document** :
+**✅ 3d. Create a new document** :
 
 - Access ***Create a new document***
 - Click `Try it out` button
 - Fill with Header `X-Cassandra-Token` with `<your_token>`
-- For `namespace-id` use `namespace1`
+- For `namespace-id` use `nosql1`
 - For `collection-id` use `col1`
 - For `body` use 
 
@@ -422,12 +307,12 @@ You will get a 201 returned code
 
 You can add a couple of documents changing values, new documents with new ids will be generated
 
-**✅ 3g Find all documents of a collection** :
+**✅ 3e Find all documents of a collection** :
 
 - Access ***Search documents in a collection***
 - Click `Try it out` button
 - Fill Header `X-Cassandra-Token` with `<your_token>`
-- For `namespace-id` use `namespace1`
+- For `namespace-id` use `nosql1`
 - For `collection-id` use `col1`
 
 Let other fields blank every query is paged in Cassandra.
@@ -456,12 +341,12 @@ Let other fields blank every query is paged in Cassandra.
         ...
 ```
 
-**✅ 3g Retrieve a document from its id** :
+**✅ 3f Retrieve a document from its id** :
 
 - Access ***Get a document***
 - Click `Try it out` button
 - Fill Header `X-Cassandra-Token` with `<your_token>`
-- For `namespace-id` use `namespace1`
+- For `namespace-id` use `nosql1`
 - For `collection-id` use `col1`
 - For `document-id` use `<doc_id_in_previous_call>`
 
@@ -500,12 +385,12 @@ Let other fields blank every query is paged in Cassandra.
 }
 ```
 
-**✅ 3h Search document from a where clause** :
+**✅ 3g Search document from a where clause** :
 
 - Access ***Search documents in a collection***
 - Click `Try it out` button
 - Fill Header `X-Cassandra-Token` with `<your_token>`
-- For `namespace-id` use `namespace1`
+- For `namespace-id` use `nosql1`
 - For `collection-id` use `col1`
 - For `where` use `{"email":    { "$eq":"clunven@sample.com" } } `
 
@@ -549,43 +434,7 @@ Let other fields blank every query is paged in Cassandra.
 
 ## 4. KeyValue Databases
 
-
 > **Key/Value databases** are some of the least complex as all of the data within consists of an indexed key and a value. Key-value databases use a hashing mechanism such that given a key, the database can quickly retrieve an associated value. Hashing mechanisms provide constant time access, which means they maintain high performance even at large scale. The keys can be any type of object, but are typically a string. The values are generally opaque blobs (i.e., a sequence of bytes that the database does not interpret). Examples include: Redis, Amazon DynamoDB, Riak, and Oracle NoSQL database. Some tabular NoSQL databases, like Cassandra, can also service key/value needs.
-
-**✅ 4a. Create a keyspace with GraphQL play ground** :
-
-This walkthrough has been realized using the [GraphQL Quick Start](https://stargate.io/docs/stargate/1.0/quickstart/quick_start-graphql.html)
-
-Open the playground image
-
-![image](images/playground.png?raw=true)
-
-
-Before you can start using the GraphQL API, you must first create a Cassandra keyspace and at least one table in your database. 
-
-- *Fill the token in graphQL header*
-
-```json
-{
-  "x-cassandra-token":"AstraCS:fjlsgehrre;ge"
-}
-```
-
-*Expected output*
-![image](images/playground1.png?raw=true)
-
-
-- Then create new keyspace `nosql3`
-
-```json
-mutation createKeyspaceLibrary {
-  createKeyspace(name:"nosql3", replicas: 3)
-}
-```
-
-👁️ Expected output
-
-![image](images/graphql1.png?raw=true)
 
 **✅ 4b. Create a table with GraphQL**
 
@@ -593,7 +442,7 @@ Use this query
 ```json
 mutation {
   kv: createTable(
-    keyspaceName:"nosql3",
+    keyspaceName:"nosql1",
     tableName:"key_value",
     partitionKeys: [ # The keys required to access your data
       { name: "key", type: {basic: TEXT} }
@@ -608,9 +457,9 @@ mutation {
 You can check in the CQL COnsole as well;
 
 ```sql
-use nosql3
+use nosql1
 
-describe keyspace nosql3;
+describe keyspace nosql1;
 ```
 
 *Expected output*
@@ -621,7 +470,7 @@ describe keyspace nosql3;
 
 Any of the created APIs can be used to interact with the GraphQL data, to write or read data.
 
-First, let’s navigate to your new keyspace `nosql3` inside the playground. Change tab to graphql and pick url `/graphql/nosql3.`
+First, let’s navigate to your new keyspace `nosql1` inside the playground. Change tab to graphql and pick url `/graphql/nosql1.`
 
 - *Fill the header token again*
 ```json
