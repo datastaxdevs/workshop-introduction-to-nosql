@@ -482,7 +482,7 @@ describe keyspace nosql1;
 
 Any of the created APIs can be used to interact with the GraphQL data, to write or read data.
 
-First, let’s navigate to your new keyspace `nosql1` inside the playground. Change tab to graphql and pick url `/graphql/nosql1.`
+First, let’s navigate to your new keyspace `nosql1` inside the playground. Change tab to graphql and pick url `/graphql/nosql1`
 
 - *Fill the header token again*
 ```json
