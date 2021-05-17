@@ -278,6 +278,7 @@ Locate the Document part in the Swagger UI.
 ```json
 { "name": "col1" }
 ```
+- Click `Execute` button
 
 You will get a 201 returned code
 
@@ -305,6 +306,7 @@ You will get a 201 returned code
      }
 }
 ```
+- Click `Execute` button
 
 *👁️ Expected output*
 ```json
@@ -348,6 +350,7 @@ Let other fields blank every query is paged in Cassandra.
         4
         ...
 ```
+- Click `Execute` button
 
 **✅ 3f Retrieve a document from its id** :
 
@@ -357,7 +360,7 @@ Let other fields blank every query is paged in Cassandra.
 - For `namespace-id` use `nosql1`
 - For `collection-id` use `col1`
 - For `document-id` use `<doc_id_in_previous_call>`
-
+- Click `Execute` button
 **👁️ Expected output**:
 ```json
 {
@@ -401,6 +404,7 @@ Let other fields blank every query is paged in Cassandra.
 - For `namespace-id` use `nosql1`
 - For `collection-id` use `col1`
 - For `where` use `{"email":    { "$eq":"clunven@sample.com" } } `
+- Click `Execute` button
 
 *👁️ Expected output*
 ```json
@@ -478,7 +482,7 @@ describe keyspace nosql1;
 
 Any of the created APIs can be used to interact with the GraphQL data, to write or read data.
 
-First, let’s navigate to your new keyspace `nosql1` inside the playground. Change tab to graphql and pick url `/graphql/nosql1.`
+First, let’s navigate to your new keyspace `nosql1` inside the playground. Change tab to graphql and pick url `/graphql/nosql1`
 
 - *Fill the header token again*
 ```json
