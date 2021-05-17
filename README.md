@@ -470,9 +470,9 @@ mutation {
 You can check in the CQL COnsole as well;
 
 ```sql
-use nosql1
+use nosql1;
 
-describe keyspace nosql1;
+describe table key_value;
 ```
 
 *Expected output*
@@ -587,7 +587,7 @@ $workshop_introduction_to_nosql> docker-compose up -d
 Creating dse ... done
 Creating workshop-introduction-to-nosql_studio_1 ... done
 ```
-Wait for the application to start (30s) and open [http:://localhost:9091](http:://localhost:9091)
+Wait for the application to start (30s) and open [http://localhost:9091](http://localhost:9091)
 
 
 ![image](images/studio_home.png?raw=true)
