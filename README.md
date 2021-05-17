@@ -361,6 +361,7 @@ Let other fields blank every query is paged in Cassandra.
 - For `collection-id` use `col1`
 - For `document-id` use `<doc_id_in_previous_call>`
 - Click `Execute` button
+
 **👁️ Expected output**:
 ```json
 {
