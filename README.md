@@ -469,9 +469,9 @@ mutation {
 You can check in the CQL COnsole as well;
 
 ```sql
-use nosql1
+use nosql1;
 
-describe keyspace nosql1;
+describe table key_value;
 ```
 
 *Expected output*
