@@ -586,7 +586,7 @@ $workshop_introduction_to_nosql> docker-compose up -d
 Creating dse ... done
 Creating workshop-introduction-to-nosql_studio_1 ... done
 ```
-Wait for the application to start (30s) and open [http:://localhost:9091](http:://localhost:9091)
+Wait for the application to start (30s) and open [http://localhost:9091](http://localhost:9091)
 
 
 ![image](images/studio_home.png?raw=true)
