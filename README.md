@@ -483,6 +483,10 @@ describe table key_value;
 
 Any of the created APIs can be used to interact with the GraphQL data, to write or read data.
 
+Navigate to the GraphQL playground, by clicking `Connect`, then `GraphQL API`, and finally you should see the URL under `Launching GraphQL Playground`. Ctrl-click or right-click the link to launch into a new tab.
+
+![Screen Shot 2021-05-19 at 11 19 11 AM](https://user-images.githubusercontent.com/23346205/118839150-452a4200-b894-11eb-8320-20b15f3b1c09.png)
+
 First, let’s navigate to your new keyspace `nosql1` inside the playground. Change tab to graphql and pick url `/graphql/nosql1`
 
 - *Fill the header token again*
