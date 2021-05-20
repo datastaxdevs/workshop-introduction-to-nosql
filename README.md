@@ -451,7 +451,21 @@ Let other fields blank every query is paged in Cassandra.
 
 **✅ 4b. Create a table with GraphQL**
 
-Use this query
+Navigate to the GraphQL playground, by clicking `Connect`, then `GraphQL API`, and finally you should see the URL under `Launching GraphQL Playground`. Ctrl-click or right-click the link to launch into a new tab.
+
+![Screen Shot 2021-05-19 at 11 19 11 AM](https://user-images.githubusercontent.com/23346205/118839150-452a4200-b894-11eb-8320-20b15f3b1c09.png)
+
+Then you need to enter in your Astra token to authenticate and talk to the database. Notice the "server cannot be reached" message. This is simply telling you it cannot make the connection because you are not authenticated. Click on `HTTP Headers` at the bottom and paste in your token.
+
+![Screen Shot 2021-05-20 at 8 49 48 AM](https://user-images.githubusercontent.com/23346205/118981634-88de8380-b948-11eb-9ece-5f75f153020e.png)
+
+Paste in your token.
+
+![Screen Shot 2021-05-20 at 8 53 07 AM](https://user-images.githubusercontent.com/23346205/118982115-18843200-b949-11eb-840c-acce0a0c562a.png)
+
+Now you are ready to go.
+
+Use this query. Since we are creating a table we want to use the `graphql-schema` tab
 ```json
 mutation {
   kv: createTable(
@@ -467,7 +481,9 @@ mutation {
 }
 ```
 
-You can check in the CQL COnsole as well;
+![Screen Shot 2021-05-20 at 8 58 13 AM](https://user-images.githubusercontent.com/23346205/118982905-df988d00-b949-11eb-8584-9407c9efa80e.png)
+
+You can check in the CQL Cosole as well;
 
 ```sql
 use nosql1;
@@ -481,13 +497,7 @@ describe table key_value;
 
 **✅ 4c. Populate the table**
 
-Any of the created APIs can be used to interact with the GraphQL data, to write or read data.
-
-Navigate to the GraphQL playground, by clicking `Connect`, then `GraphQL API`, and finally you should see the URL under `Launching GraphQL Playground`. Ctrl-click or right-click the link to launch into a new tab.
-
-![Screen Shot 2021-05-19 at 11 19 11 AM](https://user-images.githubusercontent.com/23346205/118839150-452a4200-b894-11eb-8320-20b15f3b1c09.png)
-
-First, let’s navigate to your new keyspace `nosql1` inside the playground. Change tab to graphql and pick url `/graphql/nosql1`
+Any of the created APIs can be used to interact with the GraphQL data, to write or read data. Since we are working with data now and not creating schema you will need to swtich to the `graphql` tab. Also, ensure to fill in your Astra token again.
 
 - *Fill the header token again*
 ```json
@@ -495,6 +505,16 @@ First, let’s navigate to your new keyspace `nosql1` inside the playground. Cha
   "x-cassandra-token":"AstraCS:fjlsgehrre;ge"
 }
 ```
+
+![Screen Shot 2021-05-20 at 9 04 47 AM](https://user-images.githubusercontent.com/23346205/118983681-af9db980-b94a-11eb-82b7-e0c852701265.png)
+
+Now, let’s navigate to your new keyspace `nosql1` inside the playground. Change tab to graphql and pick url `/graphql/nosql1`
+
+![Screen Shot 2021-05-20 at 9 13 26 AM](https://user-images.githubusercontent.com/23346205/118985049-1d96b080-b94c-11eb-87c4-0340e941d37c.png)
+
+
+Then paste in the following query and click "play". 
+![Screen Shot 2021-05-20 at 9 17 35 AM](https://user-images.githubusercontent.com/23346205/118985407-6c444a80-b94c-11eb-9b7d-d83e35e40bf1.png)
 
 - *Execute this query*
 ```json
