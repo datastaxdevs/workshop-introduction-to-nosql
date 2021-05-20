@@ -601,8 +601,7 @@ cd workshop-introduction-to-nosql
 **✅ 5d.Start the containers**
 
 *Linux users:*
-Folder `datastax-studio-config` is mapped to docker container (see: `docker-compose.yaml` file) and dse studio runs as user `studio` with `uid=997` and `gui=997`.
-If you are on Linux you need to give RW access to folder `datastax-studio-config` for user with `uid=997` and `gid=997` before starting dse-studio container.
+Folder `datastax-studio-config` is mapped to docker container (see: `docker-compose.yaml` file) and dse studio runs as user `studio` with `uid=997` and `gui=997` which needs RW access to that folder.
 
 Run this command on your linux system:
 ```bash
