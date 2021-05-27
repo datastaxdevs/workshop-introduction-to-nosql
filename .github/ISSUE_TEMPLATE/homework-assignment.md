@@ -2,8 +2,8 @@
 name: Homework Assignment
 about: Use this template to submit the homework
 title: "[HW] <NAME>"
-labels: wait for review, homework
-assignees: clun
+labels: homework, wait for review
+assignees: clun, HadesArchitect, SonicDMG, RyanWelford, synedra
 
 ---
 
