@@ -48,7 +48,7 @@ Follow this [guide](https://docs.datastax.com/en/astra/docs/creating-your-astra-
 
 You will find below which values to enter for each field.
 
-- **For the database name** - `nosql_db.` While Astra allows you to fill in these fields with values of your own choosing, please follow our recommendations to ensure the application runs properly.
+- **For the database name** - `nosql_db`. While Astra allows you to fill in these fields with values of your own choosing, please follow our recommendations to ensure the application runs properly.
 
 - **For the keyspace name** - `nosql1`. It's really important that you use the name "nosql1" for the code to work.
 
