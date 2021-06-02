@@ -20,7 +20,7 @@ It doesn't matter if you join our workshop live or you prefer to do at your own 
 
 To get the participation certificate, you have to complete following steps:
 
-1. Complete the practice steps of this workshop as explained below, steps I-IV are mandatory, step V is optional. Make the screenshots of the steps (1-2 per step).
+1. Complete the practice steps of this workshop as explained below, steps I-IV are mandatory, step V is optional. Take screenshots of the last completed step from either step IV or V. _NOTE: When taking screenshots ensure NOT to copy your Astra key!_
 2. Complete [try-it-out scenario](https://www.datastax.com/try-it-out) and make a screenshot of the "scenario completed" screen
 3. Submit the practice [here](https://github.com/datastaxdevs/workshop-introduction-to-nosql/issues/new?assignees=clun&labels=wait+for+review%2C+homework&template=homework-assignment.md&title=%5BHW%5D+%3CNAME%3E) attaching the screenshots.
 
