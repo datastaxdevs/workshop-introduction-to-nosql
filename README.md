@@ -20,19 +20,19 @@ It doesn't matter if you join our workshop live or you prefer to do at your own 
 
 To get the participation certificate, you have to complete following steps:
 
-1. Complete the practice steps of this workshop as explained below, steps I-IV are mandatory, step V is optional. Take screenshots of the last completed step from either step IV or V. _NOTE: When taking screenshots ensure NOT to copy your Astra key!_
+1. Complete the practice steps of this workshop as explained below, steps I-IV are mandatory, step V is optional. Take screenshots of the last completed step from either step IV or V. _NOTE: When taking screenshots ensure NOT to copy your Astra DB key!_
 2. Complete [try-it-out scenario](https://www.datastax.com/try-it-out) and make a screenshot of the "scenario completed" screen
 3. Submit the practice [here](https://github.com/datastaxdevs/workshop-introduction-to-nosql/issues/new?assignees=clun&labels=wait+for+review%2C+homework&template=homework-assignment.md&title=%5BHW%5D+%3CNAME%3E) attaching the screenshots.
 
 ## Practice
 
-1. [Create Astra Instance](#1-create-astra-instance)
+1. [Create Astra Db Instance](#1-create-astra-db-instance)
 2. [Tabular Databases](#2-tabular-databases)
 3. [Document Databases](#3-document-databases)
 4. [Key-Value Databases](#4-keyvalue-databases)
 5. [Graph Databases](#5-graph-databases)
 
-## 1. Create Astra Instance
+## 1. Create Astra Db Instance
 
 **`ASTRA`** is the simplest way to run Cassandra with zero operations at all - just push the button and get your cluster. No credit card required, $25.00 USD credit every month, roughly 5M writes, 30M reads, 40GB storage monthly - sufficient to run small production workloads.
 
@@ -48,7 +48,7 @@ Follow this [guide](https://docs.datastax.com/en/astra/docs/creating-your-astra-
 
 You will find below which values to enter for each field.
 
-- **For the database name** - `nosql_db`. While Astra allows you to fill in these fields with values of your own choosing, please follow our recommendations to ensure the application runs properly.
+- **For the database name** - `nosql_db`. While Astra DB allows you to fill in these fields with values of your own choosing, please follow our recommendations to ensure the application runs properly.
 
 - **For the keyspace name** - `nosql1`. It's really important that you use the name "nosql1" for the code to work.
 
@@ -66,13 +66,13 @@ The status will change to `Active` when the database is ready, this will only ta
 
 ## 2. Tabular databases
 
-In a tabular database we will store ... tables ! The Astra Service is based on Apache Cassandra which is tabular it make sense to start by this one.
+In a tabular database we will store ... tables ! The Astra DB Service is based on Apache Cassandra which is tabular it make sense to start by this one.
 
 > **Tabular databases** organize data in rows and columns, but with a twist from the traditional RDBMS. Also known as wide-column stores or partitioned row stores, they provide the option to organize related rows in partitions that are stored together on the same replicas to allow fast queries. Unlike RDBMSs, the tabular format is not necessarily strict. For example, Apache Cassandra™ does not require all rows to contain values for all columns in the table. Like Key/Value and Document databases, Tabular databases use hashing to retrieve rows from the table. Examples include: Cassandra, HBase, and Google Bigtable.
 
 **✅ 2a. Describe your Keyspace**
 
-At Database creation you provided a keyspace, a logical grouping for tables let's visualize it. In Astra go to CQL Console to enter the following commands
+At Database creation you provided a keyspace, a logical grouping for tables let's visualize it. In Astra DB go to CQL Console to enter the following commands
 
 - *Select your db*
 ![image](images/01.png?raw=true)
@@ -561,7 +561,7 @@ mutation insert2KV {
 
 > **Graph databases** store their data using a graph metaphor to exploit the relationships between data. Nodes in the graph represent data items, and edges represent the relationships between the data items. Graph databases are designed for highly complex and connected data, which outpaces the relationship and JOIN capabilities of an RDBMS. Graph databases are often exceptionally good at finding commonalities and anomalies among large data sets. Examples of Graph databases include DataStax Graph, Neo4J, JanusGraph, and Amazon Neptune.
 
-Astra does not contain yet a way to implement Graph Databases use cases. But at Datastax Companny we do have a product called [DataStax Graph](https://www.datastax.com/products/datastax-graph) that you can use for free when not in production.
+Astra DB does not contain yet a way to implement Graph Databases use cases. But at Datastax Companny we do have a product called [DataStax Graph](https://www.datastax.com/products/datastax-graph) that you can use for free when not in production.
 
 Today it will be a demo to be quick but you can as well do and start the demo with the following steps
 
