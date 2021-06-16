@@ -34,9 +34,9 @@ To get the participation certificate, you have to complete following steps:
 
 ## 1. Create Astra Db Instance
 
-**`ASTRA`** is the simplest way to run Cassandra with zero operations at all - just push the button and get your cluster. No credit card required, $25.00 USD credit every month, roughly 5M writes, 30M reads, 40GB storage monthly - sufficient to run small production workloads.
+**`ASTRA DB`** is the simplest way to run Cassandra with zero operations at all - just push the button and get your cluster. No credit card required, $25.00 USD credit every month, roughly 5M writes, 30M reads, 40GB storage monthly - sufficient to run small production workloads.
 
-✅ Register (if needed) and Sign In to Astra [https://astra.datastax.com](http://dtsx.io/astraDB-6-16): You can use your `Github`, `Google` accounts or register with an `email`.
+✅ Register (if needed) and Sign In to Astra DB [https://astra.datastax.com](http://dtsx.io/astraDB-6-16): You can use your `Github`, `Google` accounts or register with an `email`.
 
 _Make sure to chose a password with minimum 8 characters, containing upper and lowercase letters, at least one number and special character_
 
@@ -250,7 +250,7 @@ select json title,url,tags from videos;
 
 Use this [documentation](https://docs.datastax.com/en/astra/docs/manage-application-tokens.html) to create your application token. Copy the token value in a text file somewhere we will reuse it a lot 
 
-*Astra Token format (do not copy)*
+*Astra DB Token format (do not copy)*
 ```
 AstraCS:KDfdKeNREyWQvDpDrBqwBsUB:ec80667c....
 ```
@@ -455,7 +455,7 @@ Navigate to the GraphQL playground, by clicking `Connect`, then `GraphQL API`, a
 
 ![Screen Shot 2021-05-19 at 11 19 11 AM](https://user-images.githubusercontent.com/23346205/118839150-452a4200-b894-11eb-8320-20b15f3b1c09.png)
 
-Then you need to enter in your Astra token to authenticate and talk to the database. Notice the "server cannot be reached" message. This is simply telling you it cannot make the connection because you are not authenticated. Click on `HTTP Headers` at the bottom and paste in your token.
+Then you need to enter in your Astra DB token to authenticate and talk to the database. Notice the "server cannot be reached" message. This is simply telling you it cannot make the connection because you are not authenticated. Click on `HTTP Headers` at the bottom and paste in your token.
 
 ![Screen Shot 2021-05-20 at 8 49 48 AM](https://user-images.githubusercontent.com/23346205/118981634-88de8380-b948-11eb-9ece-5f75f153020e.png)
 
@@ -497,7 +497,7 @@ describe table key_value;
 
 **✅ 4c. Populate the table**
 
-Any of the created APIs can be used to interact with the GraphQL data, to write or read data. Since we are working with data now and not creating schema you will need to swtich to the `graphql` tab. Also, ensure to fill in your Astra token again.
+Any of the created APIs can be used to interact with the GraphQL data, to write or read data. Since we are working with data now and not creating schema you will need to swtich to the `graphql` tab. Also, ensure to fill in your Astra DB token again.
 
 - *Fill the header token again*
 ```json
@@ -681,6 +681,6 @@ Stopping dse                                     ...
 
 ## THE END
 
-Congratulation your made it to the END.
+Congratulation you made it to the END.
 
 
