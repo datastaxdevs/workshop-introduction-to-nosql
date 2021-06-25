@@ -5,7 +5,7 @@
 
 ![image](images/splash.jpeg?raw=true)
 
-This intructions will lead you to step by step operations for the workshop introducing the NoSQL Databases technologies. 
+These instructions will lead you to step by step operations for the workshop introducing the NoSQL Databases technologies. 
 
 ## Materials for the Session
 
@@ -16,9 +16,9 @@ It doesn't matter if you join our workshop live or you prefer to do at your own 
 - [Discord chat](https://bit.ly/cassandra-workshop)
 - [Questions and Answers](https://community.datastax.com/)
 
-## Partitipation Certificate / Homework
+## Participation Certificate / Homework
 
-To get the participation certificate, you have to complete following steps:
+To get the participation certificate, you have to complete the following steps:
 
 1. Complete the practice steps of this workshop as explained below, steps I-IV are mandatory, step V is optional. Take screenshots of the last completed step from either step IV or V. _NOTE: When taking screenshots ensure NOT to copy your Astra DB key!_
 2. Complete [try-it-out scenario](https://www.datastax.com/try-it-out) and make a screenshot of the "scenario completed" screen
@@ -327,6 +327,8 @@ You can add a couple of documents changing values, new documents with new ids wi
 
 Let other fields blank every query is paged in Cassandra.
 
+- Click `Execute` button
+
 **👁️ Expected output**:
 ```json
 {
@@ -350,7 +352,6 @@ Let other fields blank every query is paged in Cassandra.
         4
         ...
 ```
-- Click `Execute` button
 
 **✅ 3f Retrieve a document from its id** :
 
@@ -553,7 +554,7 @@ mutation insert2KV {
 }
 ```
 
-- Check with CQL Console the values should have been updated. Indeed with Cassandra no integrite constraints so you can de-duplicate values easily,
+- Check with CQL Console the values should have been updated. Indeed with Cassandra there are no integrity constraints, so you can de-duplicate values easily.
 
 [🏠 Back to Table of Contents](#table-of-content)
 
@@ -573,7 +574,7 @@ Today it will be a demo to be quick but you can as well do and start the demo wi
 
 **Install Docker and Docker Compose**
 
-You tneed to install Docker and Docker-compose on your machine
+You need to install Docker and Docker-compose on your machine
 - [Install **Docker** for Windows/Mac/Linux](https://github.com/DataStax-Academy/kubernetes-workshop-online/blob/master/0-setup-your-cluster/README.MD#1-install-docker)
 - [Install **Docker-Compose**  for Windows/Mac/Linux](https://github.com/DataStax-Academy/kubernetes-workshop-online/blob/master/0-setup-your-cluster/README.MD#2-install-docker-compose)
 
@@ -650,11 +651,11 @@ Use the ellipsis to now select `Notebooks`
 
 ![image](images/studio_home.png?raw=true)
 
-Once the notebook open it has you to creat the graph click `Create` button
+Once the notebook opens it asks you to create the graph: click the `Create Graph` button (and leave all settings to default)
 
 ![image](images/studio_create_graph.png?raw=true)
 
-Execute cell after call spotting the `Real Time >` button in each cell (top right) 
+Execute cell after cell spotting the `Real Time >` button in each cell (top right) 
 
 ![image](images/studio_notebook_1.png?raw=true)
 
@@ -681,6 +682,9 @@ Stopping dse                                     ...
 
 ## THE END
 
-Congratulation you made it to the END.
+Congratulations! You made it to the END.
+
+See you next time!
+
 
 
