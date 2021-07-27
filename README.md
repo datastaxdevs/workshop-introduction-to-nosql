@@ -16,9 +16,9 @@ It doesn't matter if you join our workshop live or you prefer to do at your own 
 - [Discord chat](https://bit.ly/cassandra-workshop)
 - [Questions and Answers](https://community.datastax.com/)
 
-## Participation Certificate / Homework
+## Participation Badge / Homework
 
-To get the participation certificate, you have to complete the following steps:
+To get the verified badge, you have to complete the following steps:
 
 1. Complete the practice steps of this workshop as explained below, steps I-IV are mandatory, step V is optional. Take screenshots of the last completed step from either step IV or V. _NOTE: When taking screenshots ensure NOT to copy your Astra DB key!_
 2. Complete [try-it-out scenario](https://www.datastax.com/try-it-out) and make a screenshot of the "scenario completed" screen
@@ -36,17 +36,24 @@ To get the participation certificate, you have to complete the following steps:
 
 **`ASTRA DB`** is the simplest way to run Cassandra with zero operations at all - just push the button and get your cluster. No credit card required, $25.00 USD credit every month, roughly 5M writes, 30M reads, 40GB storage monthly - sufficient to run small production workloads.
 
-✅ Register (if needed) and Sign In to Astra DB [https://astra.datastax.com](https://dtsx.io/Astra-DefHacks): You can use your `Github`, `Google` accounts or register with an `email`.
+✅ Register (if needed) and Sign In to Astra DB [https://astra.datastax.com](https://astra.dev/7-28): You can use your `Github`, `Google` accounts or register with an `email`.
 
 _Make sure to chose a password with minimum 8 characters, containing upper and lowercase letters, at least one number and special character_
 
-✅ Create a "pay as you go" plan
+✅ Choose "Start Free Now"
 
-Follow this [guide](https://docs.datastax.com/en/astra/docs/creating-your-astra-database.html), to set up a pay as you go database with a free $25 monthly credit.
+Choose the "Start Free Now" plan, then "Get Started" to work in the free tier.
 
-- **Select the pay as you go option**: Includes $25 monthly credit - no credit card needed to set up.
+You will have plenty of free initial credit (renewed each month!), roughly corresponding
+to 40 GB of storage, 30M reads and 5M writes.
 
-You will find below which values to enter for each field.
+> If this is not enough for you, congratulations! You are most likely running a mid- to large-sized business! In that case you should switch to a paid plan.
+
+(You can follow this [guide](https://docs.datastax.com/en/astra/docs/creating-your-astra-database.html), to set up your free-tier database with the $25 monthly credit.)
+
+![astra-db-signup](images/tutorials/astra_signup.gif)
+
+To create the database:
 
 - **For the database name** - `nosql_db`. While Astra DB allows you to fill in these fields with values of your own choosing, please follow our recommendations to ensure the application runs properly.
 
@@ -60,13 +67,13 @@ _You can technically use whatever you want and update the code to reflect the ke
 
 You will see your new database `pending` in the Dashboard.
 
-![my-pic](https://github.com/datastaxdevs/shared-assets/blob/master/astra/dashboard-pending-1000-update.png?raw=true)
+![db-pending-state](https://github.com/datastaxdevs/shared-assets/blob/master/astra/dashboard-pending-1000-update.png?raw=true)
 
 The status will change to `Active` when the database is ready, this will only take 2-3 minutes. You will also receive an email when it is ready.
 
 **👁️ Walkthrough**
 
-![image](images/tutorials/astra-create-db.gif?raw=true)
+![db-creation-walkthrough](images/tutorials/astra-create-db.gif?raw=true)
 
 ## 2. Tabular databases
 
