@@ -64,6 +64,10 @@ You will see your new database `pending` in the Dashboard.
 
 The status will change to `Active` when the database is ready, this will only take 2-3 minutes. You will also receive an email when it is ready.
 
+**👁️ Walkthrough**
+
+![image](images/tutorials/astra-create-db.gif?raw=true)
+
 ## 2. Tabular databases
 
 In a tabular database we will store ... tables ! The Astra DB Service is based on Apache Cassandra which is tabular it make sense to start by this one.
@@ -250,14 +254,22 @@ select json title,url,tags from videos;
 
 Use this [documentation](https://docs.datastax.com/en/astra/docs/manage-application-tokens.html) to create your application token. Copy the token value in a text file somewhere we will reuse it a lot 
 
-*Astra DB Token format (do not copy)*
+*The Astra DB Token looks like the following (do not copy, it's just an example)*
 ```
 AstraCS:KDfdKeNREyWQvDpDrBqwBsUB:ec80667c....
 ```
 
+**👁️ Walkthrough**
+
+![image](images/tutorials/astra-create-token.gif?raw=true)
+
+This is what the token page looks like:
+
 ![image](images/token.png?raw=true)
 
-This walkthrough has been realized using the [Quick Start](https://stargate.io/docs/stargate/1.0/quickstart/quick_start-document.html)
+_(You can now download the values as a CSV. We will need those values but you can also keep this window open.)_
+
+**Swagger UI**
 
 Next go the connect page, locate the SWAGGER URL
 
