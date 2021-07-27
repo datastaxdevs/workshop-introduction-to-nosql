@@ -34,7 +34,7 @@ To get the verified badge, you have to complete the following steps:
 
 ## 1. Create Astra Db Instance
 
-**`ASTRA DB`** is the simplest way to run Cassandra with zero operations at all - just push the button and get your cluster. No credit card required, $25.00 USD credit every month, roughly 5M writes, 30M reads, 40GB storage monthly - sufficient to run small production workloads.
+_**`ASTRA DB`** is the simplest way to run Cassandra with zero operations at all - just push the button and get your cluster. No credit card required, $25.00 USD credit every month, roughly 5M writes, 30M reads, 40GB storage monthly - sufficient to run small production workloads._
 
 ✅ Register (if needed) and Sign In to Astra DB [https://astra.datastax.com](https://astra.dev/7-28): You can use your `Github`, `Google` accounts or register with an `email`.
 
@@ -49,7 +49,7 @@ to 40 GB of storage, 30M reads and 5M writes.
 
 > If this is not enough for you, congratulations! You are most likely running a mid- to large-sized business! In that case you should switch to a paid plan.
 
-(You can follow this [guide](https://docs.datastax.com/en/astra/docs/creating-your-astra-database.html), to set up your free-tier database with the $25 monthly credit.)
+(You can follow this [guide](https://docs.datastax.com/en/astra/docs/creating-your-astra-database.html) to set up your free-tier database with the $25 monthly credit.)
 
 ![astra-db-signup](images/tutorials/astra_signup.gif)
 
@@ -77,13 +77,15 @@ The status will change to `Active` when the database is ready, this will only ta
 
 ## 2. Tabular databases
 
-In a tabular database we will store ... tables ! The Astra DB Service is based on Apache Cassandra which is tabular it make sense to start by this one.
+In a tabular database we will store ... tables! The Astra DB Service is built on Apache Cassandra™, which is tabular: it make sense to start by this one.
 
 > **Tabular databases** organize data in rows and columns, but with a twist from the traditional RDBMS. Also known as wide-column stores or partitioned row stores, they provide the option to organize related rows in partitions that are stored together on the same replicas to allow fast queries. Unlike RDBMSs, the tabular format is not necessarily strict. For example, Apache Cassandra™ does not require all rows to contain values for all columns in the table. Like Key/Value and Document databases, Tabular databases use hashing to retrieve rows from the table. Examples include: Cassandra, HBase, and Google Bigtable.
 
 **✅ 2a. Describe your Keyspace**
 
-At Database creation you provided a keyspace, a logical grouping for tables let's visualize it. In Astra DB go to CQL Console to enter the following commands
+At Database creation you provided a keyspace, a logical grouping for tables.
+Let's visualize it.
+In Astra DB go to CQL Console to enter the following commands
 
 - *Select your db*
 ![image](images/01.png?raw=true)
@@ -167,7 +169,7 @@ where videoid=e466f561-4ea4-4eb7-8dcc-126e0fbfd573;
 
 But data can be grouped, we stored together what should be retrieved together.
 
-- *Create This new table*
+- *Create this new table*
 ```sql
 CREATE TABLE IF NOT EXISTS users_by_city (
  city      text,
@@ -197,7 +199,7 @@ VALUES('ORLANDO', 'David', 'Gilardi', 'dgi@sample.com');
 SELECT * from users_by_city WHERE city='PARIS';
 ```
 
-- *List values without parititions keys*
+- *List values without partitions keys*
 ```sql
 SELECT * from users_by_city WHERE lastname='Gilardi';
 ```
@@ -231,7 +233,7 @@ Let's do some hands-on with document database queries.
 
 **✅ 3a. Cassandra knows JSON** :
 
-It is not a known fact but Cassandra accepts JSON query out of the box. You can find more information [here](https://docs.datastax.com/en/cql-oss/3.3/cql/cql_using/useInsertJSON.html)
+It is not a known fact but Cassandra accepts JSON query out of the box. You can find more information [here](https://docs.datastax.com/en/cql-oss/3.3/cql/cql_using/useInsertJSON.html).
 
 - *Insert data into Cassandra with JSON*
 
@@ -247,7 +249,7 @@ INSERT INTO videos JSON '{
 }';
 ```
 
-In the same way you can retrieve JSON out of Cassandra ([more info here](https://docs.datastax.com/en/cql-oss/3.3/cql/cql_using/useQueryJSON.html))
+In the same way you can retrieve JSON out of Cassandra ([more info here](https://docs.datastax.com/en/cql-oss/3.3/cql/cql_using/useQueryJSON.html)).
 
 - *Retrieve data from Cassandra as JSON*
 
@@ -259,7 +261,18 @@ select json title,url,tags from videos;
 
 **✅ 3b. Create your Application token** :
 
-Use this [documentation](https://docs.datastax.com/en/astra/docs/manage-application-tokens.html) to create your application token. Copy the token value in a text file somewhere we will reuse it a lot 
+You need to create an Astra DB token, which will used to interact with the
+database through the Swagger UI. Once created, store its value in a safe place
+(the Astra console won't show that to you again!) and do not post it in public.
+
+To create the token go to the Astra dashboard, open the Organization menu on the
+top left and choose "Organization settings", then "Token Management" and finally
+you will be able to generate a new token. Choose the role "Database Administrator".
+
+Download the token in CSV format and/or copy
+its value to a handy place such as a text editor: we will use it immediately!
+
+_See this [documentation](https://docs.datastax.com/en/astra/docs/manage-application-tokens.html) to create your application token._ 
 
 *The Astra DB Token looks like the following (do not copy, it's just an example)*
 ```
@@ -272,9 +285,7 @@ AstraCS:KDfdKeNREyWQvDpDrBqwBsUB:ec80667c....
 
 This is what the token page looks like:
 
-![image](images/token.png?raw=true)
-
-_(You can now download the values as a CSV. We will need those values but you can also keep this window open.)_
+![image](images/token_hl.png?raw=true)
 
 **Swagger UI**
 
@@ -486,7 +497,7 @@ Paste in your token.
 Now you are ready to go.
 
 Use this query. Since we are creating a table we want to use the `graphql-schema` tab
-```json
+```
 mutation {
   kv: createTable(
     keyspaceName:"nosql1",
@@ -503,7 +514,7 @@ mutation {
 
 ![Screen Shot 2021-05-20 at 8 58 13 AM](https://user-images.githubusercontent.com/23346205/118982905-df988d00-b949-11eb-8584-9407c9efa80e.png)
 
-You can check in the CQL Cosole as well;
+You can check in the CQL Console as well;
 
 ```sql
 use nosql1;
@@ -537,7 +548,7 @@ Then paste in the following query and click "play".
 ![Screen Shot 2021-05-20 at 9 17 35 AM](https://user-images.githubusercontent.com/23346205/118985407-6c444a80-b94c-11eb-9b7d-d83e35e40bf1.png)
 
 - *Execute this query*
-```json
+```
 mutation insert2KV {
   key1: insertkey_value(value: {key:"key1", value:"bbbb"}) {
     value {
@@ -552,7 +563,7 @@ mutation insert2KV {
 }
 ```
 
-- Check with CQL CConsole
+- Check with CQL Console
 
 ```sql
 select * from key_value;
@@ -563,7 +574,7 @@ select * from key_value;
 ![image](images/graphql2.png?raw=true)
 
 - *Execute this query*
-```json
+```
 mutation insert2KV {
   key1: insertkey_value(value: {key:"key1", value:"cccc"}) {
     value {
