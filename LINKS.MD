@@ -1,22 +1,64 @@
-# Links a responses for Introduction to NoSQL databases
+_Courtesy of the advocate team_
 
-## Links during the session
+## LINKS
+
+### HANDS-ON
 
 - **Github**
 
 ```
 🔔 🔗 GITHUB =>  https://github.com/datastaxdevs workshop-introduction-to-nosql
+```
 
+- **Hands-on #1**
+
+```
 🔔 🔗 Hands-on #1: https://github.com/datastaxdevs/workshop-introduction-to-nosql#1-create-astra-db-instance
+```
 
+- **Astra DB Link**
+
+```
+🛢️ 🔗 Create your astra DB https://astra.dev/7-28
+```
+
+- **Astra DB infos**
+
+```
+Please use DBName=nosql_db, keyspace=nosql1
+```
+
+- **Create token documentations**
+
+```
+ ℹ️ 🔗 DOC CREATE TOKEN => https://docs.datastax.com/en/astra/docs/user-permissions.html
+```
+
+- **Hands-on #2**
+
+```
 🔔 🔗 Hands-on #2: https://github.com/datastaxdevs/workshop-introduction-to-nosql#2-tabular-databases
+```
 
+- **Hands-on #3**
+
+```
 🔔 🔗 Hands-on #3: https://github.com/datastaxdevs/workshop-introduction-to-nosql#3-document-databases
+```
 
+- **Hands-on #4**
+
+```
 🔔 🔗 Hands-on #4: https://github.com/datastaxdevs/workshop-introduction-to-nosql#4-keyvalue-databases
+```
 
+- **Hands-on #5**
+
+```
 🔔 🔗 Hands-on #5: https://github.com/datastaxdevs/workshop-introduction-to-nosql#5-graph-databases
 ```
+
+### RESOURCES
 
 - **Slides**
 
@@ -42,21 +84,7 @@
 🎲 🔗 MENTI.COM and enter the code AAA BBB
 ```
 
-- **Astra DB**
-
-```
-🛢️ 🔗 Create your astra DB https://astra.dev/7-28
-```
-
-```
-Please use DBName=nosql_db, keyspace=nosql1
-```
-
-```
- ℹ️ 🔗 DOC CREATE TOKEN => https://docs.datastax.com/en/astra/docs/user-permissions.html
-```
-
-## Links In the END
+### The END
 
 - **Voucher**
 
@@ -105,7 +133,7 @@ Vouchers are valid for 3 months and 2 attempts. Redeem the badge only when you f
 **Cassandra vs Mongo**
 
 ```
-
+There are not the same architecture CA vs AP, use cases, and way to interact. There is not one better than this other.
 ```
 
 ## Linkedin
