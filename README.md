@@ -77,7 +77,7 @@ The status will change to `Active` when the database is ready, this will only ta
 
 ## 2. Tabular databases
 
-In a tabular database we will store ... tables! The Astra DB Service is built on Apache Cassandra™, which is tabular: it make sense to start by this one.
+In a tabular database we will store ... tables! The Astra DB Service is built on Apache Cassandra™, which is tabular: it makes sense to start by this one.
 
 > **Tabular databases** organize data in rows and columns, but with a twist from the traditional RDBMS. Also known as wide-column stores or partitioned row stores, they provide the option to organize related rows in partitions that are stored together on the same replicas to allow fast queries. Unlike RDBMSs, the tabular format is not necessarily strict. For example, Apache Cassandra™ does not require all rows to contain values for all columns in the table. Like Key/Value and Document databases, Tabular databases use hashing to retrieve rows from the table. Examples include: Cassandra, HBase, and Google Bigtable.
 
