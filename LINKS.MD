@@ -7,7 +7,7 @@ _Courtesy of the advocate team_
 - **Github**
 
 ```
-🔔 🔗 GITHUB =>  https://github.com/datastaxdevs workshop-introduction-to-nosql
+🔔 🔗 GITHUB =>  https://github.com/datastaxdevs/workshop-introduction-to-nosql
 ```
 
 - **Hands-on #1**

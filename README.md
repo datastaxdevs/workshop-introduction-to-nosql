@@ -199,6 +199,8 @@ VALUES('ORLANDO', 'David', 'Gilardi', 'dgi@sample.com');
 SELECT * from users_by_city WHERE city='PARIS';
 ```
 
+<!--
+
 - *List values without partitions keys*
 ```sql
 SELECT * from users_by_city WHERE lastname='Gilardi';
@@ -222,6 +224,7 @@ SELECT * from users_by_city WHERE lastname='Gilardi' ALLOW FILTERING;
 ```sql
 tracing off;
 ```
+-->
 
 [🏠 Back to Table of Contents](#table-of-content)
 
