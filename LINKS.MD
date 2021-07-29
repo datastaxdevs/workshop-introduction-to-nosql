@@ -19,7 +19,7 @@ _Courtesy of the advocate team_
 - **Astra DB Link**
 
 ```
-🛢️ 🔗 Create your astra DB https://astra.dev/7-28
+🛢️ 🔗 Create your astra DB https://astra.dev/7-29
 ```
 
 - **Astra DB infos**
