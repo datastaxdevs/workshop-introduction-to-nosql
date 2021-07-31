@@ -1,17 +1,18 @@
 ---
 name: Homework Assignment
 about: Use this template to submit the homework
-title: "[HW] <NAME>"
+title: "workshop-introduction-to-nosql"
 labels: homework, wait for review
 assignees: HadesArchitect, SonicDMG, RyanWelford
 
 ---
 
-**Name:** <NAME>
-**Email:** <email>
-**Linkedin Profile:** <LINK>
+**Name:** Senthil Mohanasundaram
+**Email:** senthil.mm@gmail.com
+**Linkedin Profile:** senthil.mm@gmail.com
 
 Attach the homework screenshots below:
 -----------------------------------------
 
 <SCREENSHOTS>
+[HomeWork Screenshot_Senthil M.docx](https://github.com/datastaxdevs/workshop-introduction-to-nosql/files/6911090/HomeWork.Screenshot_Senthil.M.docx)
