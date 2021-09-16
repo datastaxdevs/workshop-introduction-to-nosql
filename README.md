@@ -268,9 +268,13 @@ You need to create an Astra DB token, which will be used to interact with the
 database through the Swagger UI. Once created, store its value in a safe place
 (the Astra console won't show that to you again!) and do not post it in public.
 
-To create the token go to the Astra dashboard, open the Organization menu on the
+To create the token from your main dashboard (where your databases are listed)
+simply click on the "..." menu next to your database and choose "Generate a token".
+Choose the role "Database Administrator" and click on "Generate Token".
+
+_Alternatively, go to the Astra dashboard, open the Organization menu on the
 top left and choose "Organization settings", then "Token Management" and finally
-you will be able to generate a new token. Choose the role "Database Administrator".
+you will be able to generate a new token. Choose the role "Database Administrator"._
 
 Download the token in CSV format and/or copy
 its value to a handy place such as a text editor: we will use it immediately!
@@ -284,6 +288,12 @@ AstraCS:KDfdKeNREyWQvDpDrBqwBsUB:ec80667c....
 
 **👁️ Walkthrough**
 
+Quick way:
+
+![image](images/tutorials/generate_token.png?raw=true))
+
+Alternative way:
+
 ![image](images/tutorials/astra-create-token.gif?raw=true)
 
 This is what the token page looks like:
@@ -292,15 +302,17 @@ This is what the token page looks like:
 
 **Swagger UI**
 
-Next go the connect page, locate the SWAGGER URL
+Next go the "Connect" page, locate the SWAGGER URL
 
 ![image](images/connect.png?raw=true)
 
-Locate the Document part in the Swagger UI.
+Locate the "documents" section in the Swagger UI.
 
 ![image](images/05.png?raw=true)
 
 **✅ 3c Create a new empty collection** :
+
+![Swagger 3c](images/swagger/swagger_3c.png)
 
 - Access ***Create a new empty collection in a namespace***
 - Click `Try it out` button
@@ -313,9 +325,11 @@ Locate the Document part in the Swagger UI.
 ```
 - Click `Execute` button
 
-You will get a 201 returned code
+You will get an _"HTTP 201 - Created"_ return code
 
 **✅ 3d. Create a new document** :
+
+![Swagger 3d](images/swagger/swagger_3d.png)
 
 - Access ***Create a new document***
 - Click `Try it out` button
@@ -326,17 +340,17 @@ You will get a 201 returned code
 
 ```json
 {
-   "videoid":"e466f561-4ea4-4eb7-8dcc-126e0fbfd573",
-     "email":"clunven@sample.com",
-     "title":"A Second videos",
-     "upload":"2020-02-26 15:09:22 +00:00",
-     "url": "http://google.fr",
-     "frames": [1,2,3,4],
-     "tags":   [ "cassandra","accelerate", "2020"],
-     "formats": { 
-        "mp4": {"width":1,"height":1},
-        "ogg": {"width":1,"height":1}
-     }
+    "videoid":"e466f561-4ea4-4eb7-8dcc-126e0fbfd573",
+    "email":"clunven@sample.com",
+    "title":"A Second videos",
+    "upload":"2020-02-26 15:09:22 +00:00",
+    "url": "http://google.fr",
+    "frames": [1,2,3,4],
+    "tags":   [ "cassandra","accelerate", "2020"],
+    "formats": { 
+       "mp4": {"width":1,"height":1},
+       "ogg": {"width":1,"height":1}
+    }
 }
 ```
 - Click `Execute` button
@@ -351,6 +365,8 @@ You will get a 201 returned code
 You can add a couple of documents changing values, new documents with new ids will be generated
 
 **✅ 3e Find all documents of a collection** :
+
+![Swagger 3e](images/swagger/swagger_3e.png)
 
 - Access ***Search documents in a collection***
 - Click `Try it out` button
@@ -387,6 +403,8 @@ Let other fields blank every query is paged in Cassandra.
 ```
 
 **✅ 3f Retrieve a document from its id** :
+
+![Swagger 3f](images/swagger/swagger_3f.png)
 
 - Access ***Get a document***
 - Click `Try it out` button
@@ -432,6 +450,8 @@ Let other fields blank every query is paged in Cassandra.
 ```
 
 **✅ 3g Search document from a where clause** :
+
+![Swagger 3g](images/swagger/swagger_3g.png)
 
 - Access ***Search documents in a collection***
 - Click `Try it out` button
@@ -536,7 +556,7 @@ Any of the created APIs can be used to interact with the GraphQL data, to write 
 - *Fill the header token again*
 ```json
 {
-  "x-cassandra-token":"AstraCS:fjlsgehrre;ge"
+  "x-cassandra-token":"AstraCS:KDfdKeNREyWQvDpDrBqwBsUB:ec80667c...."
 }
 ```
 
