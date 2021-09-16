@@ -264,7 +264,7 @@ select json title,url,tags from videos;
 
 **✅ 3b. Create your Application token** :
 
-You need to create an Astra DB token, which will used to interact with the
+You need to create an Astra DB token, which will be used to interact with the
 database through the Swagger UI. Once created, store its value in a safe place
 (the Astra console won't show that to you again!) and do not post it in public.
 
