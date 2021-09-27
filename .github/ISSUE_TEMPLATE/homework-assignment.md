@@ -7,8 +7,8 @@ assignees: HadesArchitect, SonicDMG, RyanWelford
 
 ---
 
-**Name:** <NAME>
-**Email:** <email>
+**Name:** REPLACE_ME
+**Email:** REPLACE_ME
 **Linkedin Profile:** <LINK>
 
 Attach the homework screenshots below:
