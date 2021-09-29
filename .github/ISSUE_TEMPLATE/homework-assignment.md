@@ -11,7 +11,7 @@ assignees: HadesArchitect, SonicDMG, RyanWelford
 **Email:** REPLACE_ME
 **Linkedin Profile:** <LINK>
 
-Attach the homework screenshots below:
+Attach the homework screenshot below: Remember, you only need the last screen of the step you have completed, step V or VI
 -----------------------------------------
 
-<SCREENSHOTS>
+<SCREENSHOT>
