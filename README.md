@@ -22,7 +22,7 @@ To get the verified badge, you have to complete the following steps:
 
 1. Complete the practice steps of this workshop as explained below, steps I-IV are mandatory, step V is optional. Take a screenshot of the last completed step from either step IV or V. _NOTE: When taking screenshots ensure NOT to copy your Astra DB key!_
 2. Complete [try-it-out scenario](https://www.datastax.com/try-it-out) and make a screenshot of the "scenario completed" screen
-3. Submit the practice [here](https://github.com/datastaxdevs/workshop-introduction-to-nosql/issues/new?assignees=clun&labels=wait+for+review%2C+homework&template=homework-assignment.md&title=%5BHW%5D+%3CNAME%3E) attaching the screenshots.
+3. Submit the practice [here](https://dtsx.io/nosql-ws-hw) attaching the screenshots.
 
 ## Practice
 
