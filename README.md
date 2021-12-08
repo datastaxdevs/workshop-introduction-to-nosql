@@ -45,7 +45,7 @@ _Make sure to chose a password with minimum 8 characters, containing upper and l
 |Field| Value|
 |---|---|
 |**database name**| `workshops` |
-|**keyspace**| `nosql_db` |
+|**keyspace**| `nosql1` |
 |**Cloud Provider**| *Use the one you like, click a cloud provider logo, pick an Area in the list and finally pick a region.* |
 
 _You can technically use whatever you want and update the code to reflect the keyspace. This is really to get you on a happy path for the first run._
