@@ -26,54 +26,33 @@ To get the verified badge, you have to complete the following steps:
 
 ## Practice
 
-1. [Create Astra Db Instance](#1-create-astra-db-instance)
+1. [Login or Register to AstraDB and create database](#1-login-or-register-to-astradb-and-create-database)
 2. [Tabular Databases](#2-tabular-databases)
 3. [Document Databases](#3-document-databases)
 4. [Key-Value Databases](#4-keyvalue-databases)
 5. [Graph Databases](#5-graph-databases)
 
-## 1. Create Astra Db Instance
+## 1. Login or Register to AstraDB and create database
+**`ASTRADB`** is the simplest way to run Cassandra with zero operations at all - just push the button and get your cluster. No credit card required, roughly 20M reads/writes and 80GB storage per month for FREE - sufficient to run small production workloads.  
 
-_**`ASTRA DB`** is the simplest way to run Cassandra with zero operations at all - just push the button and get your cluster. No credit card required, $25.00 USD credit every month, roughly 5M writes, 30M reads, 40GB storage monthly - sufficient to run small production workloads._
-
-✅ Register (if needed) and Sign In to Astra DB [https://astra.datastax.com](https://astra.dev/12-8): You can use your `Github`, `Google` accounts or register with an `email`.
+✅ **Step 1a:** Click the button to login or register with Datastax. You can use your `Github`, `Google` accounts or register with an `email`.
 
 _Make sure to chose a password with minimum 8 characters, containing upper and lowercase letters, at least one number and special character_
 
-✅ Choose "Start Free Now"
+<a href="https://astra.dev/12-8"><img src="https://github.com/datastaxdevs/workshop-graphql-netflix/raw/master/img/create_astra_db.png?raw=true" /></a>
 
-Choose the "Start Free Now" plan, then "Get Started" to work in the free tier.
-
-You will have plenty of free initial credit (renewed each month!), roughly corresponding
-to 40 GB of storage, 30M reads and 5M writes.
-
-> If this is not enough for you, congratulations! You are most likely running a mid- to large-sized business! In that case you should switch to a paid plan.
-
-(You can follow this [guide](https://docs.datastax.com/en/astra/docs/creating-your-astra-database.html) to set up your free-tier database with the $25 monthly credit.)
-
-![astra-db-signup](images/tutorials/astra_signup.gif)
-
-To create the database:
-
-- **For the database name** - `nosql_db`. While Astra DB allows you to fill in these fields with values of your own choosing, please follow our recommendations to ensure the application runs properly.
-
-- **For the keyspace name** - `nosql1`. It's really important that you use the name "nosql1" for the code to work.
+**Use the following values when creating the database**
+|Field| Value|
+|---|---|
+|**database name**| `workshops` |
+|**keyspace**| `nosql_db` |
+|**Cloud Provider**| *Use the one you like, click a cloud provider logo, pick an Area in the list and finally pick a region.* |
 
 _You can technically use whatever you want and update the code to reflect the keyspace. This is really to get you on a happy path for the first run._
 
-- **For provider and region**: Choose and provider (either GCP or AWS). Region is where your database will reside physically (choose one close to you or your users).
-
-- **Create the database**. Review all the fields to make sure they are as shown, and click the `Create Database` button.
-
-You will see your new database `pending` in the Dashboard.
-
-![db-pending-state](https://github.com/datastaxdevs/shared-assets/blob/master/astra/dashboard-pending-1000-update.png?raw=true)
+#### You will see your new database in `pending` or `initailizing` on the Dashboard.
 
 The status will change to `Active` when the database is ready, this will only take 2-3 minutes. You will also receive an email when it is ready.
-
-**👁️ Walkthrough**
-
-![db-creation-walkthrough](images/tutorials/astra-create-db.gif?raw=true)
 
 ## 2. Tabular databases
 
