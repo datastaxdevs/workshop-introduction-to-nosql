@@ -271,10 +271,6 @@ Quick way:
 
 ![image](images/tutorials/generate_token.png?raw=true))
 
-Alternative way:
-
-![image](images/tutorials/astra-create-token.gif?raw=true)
-
 This is what the token page looks like:
 
 ![image](images/token_hl.png?raw=true)
@@ -486,7 +482,7 @@ Let other fields blank every query is paged in Cassandra.
 
 Navigate to the GraphQL playground, by clicking `Connect`, then `GraphQL API`, and finally you should see the URL under `Launching GraphQL Playground`. Ctrl-click or right-click the link to launch into a new tab.
 
-![Screen Shot 2021-05-19 at 11 19 11 AM](https://user-images.githubusercontent.com/23346205/118839150-452a4200-b894-11eb-8320-20b15f3b1c09.png)
+![Graph connect](images/graph_connect.png)
 
 Then you need to enter in your Astra DB token to authenticate and talk to the database. Notice the "server cannot be reached" message. This is simply telling you it cannot make the connection because you are not authenticated. Click on `HTTP Headers` at the bottom and paste in your token.
 
