@@ -598,7 +598,7 @@ Today it will be a demo to be quick but you can as well do and start the demo wi
 
 **Minimal Configuration**: You need to have a computer with this minimal configuration requirements
 - At least 2CPU
-- At least 3GB or RAM
+- At least 6GB or RAM
 
 **Install Docker and Docker Compose**
 
