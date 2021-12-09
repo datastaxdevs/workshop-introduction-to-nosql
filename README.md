@@ -39,7 +39,7 @@ To get the verified badge, you have to complete the following steps:
 
 _Make sure to chose a password with minimum 8 characters, containing upper and lowercase letters, at least one number and special character_
 
-<a href="https://astra.dev/12-8"><img src="https://github.com/datastaxdevs/workshop-graphql-netflix/raw/master/img/create_astra_db.png?raw=true" /></a>
+<a href="https://astra.dev/12-9"><img src="https://github.com/datastaxdevs/workshop-graphql-netflix/raw/master/img/create_astra_db.png?raw=true" /></a>
 
 **Use the following values when creating the database**
 |Field| Value|
