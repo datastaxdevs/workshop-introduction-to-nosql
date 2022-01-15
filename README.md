@@ -638,6 +638,14 @@ cd workshop-introduction-to-nosql
   >```
 :warning: *Linux users:*
 
+:📝 Note for *Windows users:*
+  >Start the *studio image* `without a volume`. Remove these 2 lines above `networks` in *studio* (see: `docker-compose.yaml` file) 
+  >```yaml
+  >volumes:
+  >    - "./datastax-studio-config:/var/lib/datastax-studio"
+
+:📝 Note for *Windows users:*
+
 Start containers:
 ```bash
 docker-compose up -d
