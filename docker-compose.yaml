@@ -41,6 +41,7 @@ services:
        - dse
      environment:
        DS_LICENSE: accept
+      #  for windows users - start studio image without volumes (remove the below 2 lines)
      volumes:
        - "./datastax-studio-config:/var/lib/datastax-studio"
      networks:
