@@ -5,7 +5,7 @@
 
 ![image](images/splash.jpeg?raw=true)
 
-These instructions will lead you to step by step operations for the workshop introducing the NoSQL Databases technologies. 
+These instructions will lead you step by step for the workshop on introducing the NoSQL Databases technologies.
 
 ## Materials for the Session
 
@@ -39,14 +39,16 @@ To get the verified badge, you have to complete the following steps:
 
 _Make sure to chose a password with minimum 8 characters, containing upper and lowercase letters, at least one number and special character_
 
-<a href="https://astra.dev/12-9"><img src="https://github.com/datastaxdevs/workshop-graphql-netflix/raw/master/img/create_astra_db.png?raw=true" /></a>
+<a href="https://astra.dev/2-9"><img src="https://github.com/datastaxdevs/workshop-graphql-netflix/raw/master/img/create_astra_db.png?raw=true" /></a>
 
 **Use the following values when creating the database**
+
 |Field| Value|
 |---|---|
 |**database name**| `workshops` |
 |**keyspace**| `nosql1` |
 |**Cloud Provider**| *Use the one you like, click a cloud provider logo, pick an Area in the list and finally pick a region.* |
+
 
 _You can technically use whatever you want and update the code to reflect the keyspace. This is really to get you on a happy path for the first run._
 
@@ -56,7 +58,7 @@ The status will change to `Active` when the database is ready, this will only ta
 
 ## 2. Tabular databases
 
-In a tabular database we will store ... tables! The Astra DB Service is built on Apache Cassandra™, which is tabular: it makes sense to start by this one.
+In a tabular database we will store ... tables! The Astra DB Service is built on Apache Cassandra™, which is tabular. Let's start with this.
 
 > **Tabular databases** organize data in rows and columns, but with a twist from the traditional RDBMS. Also known as wide-column stores or partitioned row stores, they provide the option to organize related rows in partitions that are stored together on the same replicas to allow fast queries. Unlike RDBMSs, the tabular format is not necessarily strict. For example, Apache Cassandra™ does not require all rows to contain values for all columns in the table. Like Key/Value and Document databases, Tabular databases use hashing to retrieve rows from the table. Examples include: Cassandra, HBase, and Google Bigtable.
 
@@ -99,13 +101,43 @@ CREATE TABLE IF NOT EXISTS videos (
 ```
 
 - *Visualize structure*
+
 ```sql
 describe keyspace nosql1;
+```
+**👁️ Expected output**
+
+```
+CREATE KEYSPACE nosql1 WITH replication = {'class': 'NetworkTopologyStrategy', 'us-east1': '3'}  AND durable_writes = true;
+
+CREATE TABLE nosql1.videos (
+    videoid uuid PRIMARY KEY,
+    email text,
+    frames list<int>,
+    tags set<text>,
+    title text,
+    upload timestamp,
+    url text
+) WITH additional_write_policy = '99PERCENTILE'
+    AND bloom_filter_fp_chance = 0.01
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'NONE'}
+    AND comment = ''
+    AND compaction = {'class': 'org.apache.cassandra.db.compaction.UnifiedCompactionStrategy'}
+    AND compression = {'chunk_length_in_kb': '64', 'class': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
+    AND default_time_to_live = 0
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair = 'BLOCKING'
+    AND speculative_retry = '99PERCENTILE';
 ```
 
 **✅ 2c. Working with DATA** :
 
 - *Insert some entries on first table*
+
 ```sql
 INSERT INTO videos(videoid, email, title, upload, url, tags, frames)
 VALUES(uuid(), 
@@ -137,6 +169,19 @@ VALUES(e466f561-4ea4-4eb7-8dcc-126e0fbfd573,
 select * from videos;
 ```
 
+**👁️ Expected output**
+
+```
+ videoid                              | email          | frames       | tags                          | title                           | upload                          | url
+--------------------------------------+----------------+--------------+-------------------------------+---------------------------------+---------------------------------+---------------------------------------------
+ a5ab4896-7caa-4d85-ae2b-b0bbfd7e074f | clu@sample.com |         null |                          null |                    Demo video Y | 2022-02-07 21:51:43.469000+0000 |        https://www.youtube.com/watch?v=XXXX
+ e466f561-4ea4-4eb7-8dcc-126e0fbfd573 | clu@sample.com |         null |                          null |               Yet another video | 2022-02-07 21:52:06.549000+0000 |       https://www.youtube.com/watch?v=ABCDE
+ f22076f3-c920-4bad-8eb8-e730f68099b1 | clu@sample.com | [1, 2, 3, 4] | {'2021', 'nosql', 'workshop'} | Introduction to Nosql Databases | 2022-02-07 21:52:06.534000+0000 | https://www.youtube.com/watch?v=cMDHxsGbmC8
+ b6a4e555-d2c0-4913-adc5-70fc816ef9c9 | clu@sample.com |         null |                          null |                    Demo video Y | 2022-02-07 21:52:06.544000+0000 |        https://www.youtube.com/watch?v=XXXX
+
+(4 rows)
+```
+
 - *Read by id*
 
 ```sql
@@ -144,11 +189,23 @@ select * from videos
 where videoid=e466f561-4ea4-4eb7-8dcc-126e0fbfd573;
 ```
 
+**👁️ Expected output**
+
+```
+ videoid                              | email          | frames | tags | title             | upload                          | url
+--------------------------------------+----------------+--------+------+-------------------+---------------------------------+---------------------------------------
+ e466f561-4ea4-4eb7-8dcc-126e0fbfd573 | clu@sample.com |   null | null | Yet another video | 2022-02-07 21:52:06.549000+0000 | https://www.youtube.com/watch?v=ABCDE
+
+(1 rows)
+```
+
+
 **✅ 2d. Working with PARTITIONS** :
 
 But data can be grouped, we stored together what should be retrieved together.
 
 - *Create this new table*
+
 ```sql
 CREATE TABLE IF NOT EXISTS users_by_city (
  city      text,
@@ -181,6 +238,7 @@ SELECT * from users_by_city WHERE city='PARIS';
 <!--
 
 - *List values without partitions keys*
+
 ```sql
 SELECT * from users_by_city WHERE lastname='Gilardi';
 ```
@@ -195,11 +253,13 @@ SELECT * from users_by_city WHERE city='PARIS';
 ```
 
 - *Forcing Full Scan = SLOW*
+
 ```sql
 SELECT * from users_by_city WHERE lastname='Gilardi' ALLOW FILTERING;
 ```
 
 - *Stop debugging*
+
 ```sql
 tracing off;
 ```
@@ -317,7 +377,7 @@ You will get an _"HTTP 201 - Created"_ return code
 {
     "videoid":"e466f561-4ea4-4eb7-8dcc-126e0fbfd573",
     "email":"clunven@sample.com",
-    "title":"A Second videos",
+    "title":"A Second video",
     "upload":"2020-02-26 15:09:22 +00:00",
     "url": "http://google.fr",
     "frames": [1,2,3,4],
@@ -474,9 +534,9 @@ Let other fields blank every query is paged in Cassandra.
 
 [🏠 Back to Table of Contents](#table-of-content)
 
-## 4. KeyValue Databases
+## 4. Key/Value Databases
 
-> **Key/Value databases** are some of the least complex as all of the data within consists of an indexed key and a value. Key-value databases use a hashing mechanism such that given a key, the database can quickly retrieve an associated value. Hashing mechanisms provide constant time access, which means they maintain high performance even at large scale. The keys can be any type of object, but are typically a string. The values are generally opaque blobs (i.e., a sequence of bytes that the database does not interpret). Examples include: Redis, Amazon DynamoDB, Riak, and Oracle NoSQL database. Some tabular NoSQL databases, like Cassandra, can also service key/value needs.
+> **Key/Value databases** are some of the simplest and yet powerful as all of the data within consists of an indexed key and a value. Key-value databases use a hashing mechanism such that given a key, the database can quickly retrieve an associated value. Hashing mechanisms provide constant time access, which means they maintain high performance even at large scale. The keys can be any type of object, but are typically a string. The values are generally opaque blobs (i.e., a sequence of bytes that the database does not interpret). Examples include: Redis, Amazon DynamoDB, Riak, and Oracle NoSQL database. Some tabular NoSQL databases, like Cassandra, can also service key/value needs.
 
 **✅ 4b. Create a table with GraphQL**
 
@@ -495,6 +555,7 @@ Paste in your token.
 Now you are ready to go.
 
 Use this query. Since we are creating a table we want to use the `graphql-schema` tab
+
 ```
 mutation {
   kv: createTable(
@@ -529,6 +590,7 @@ describe table key_value;
 Any of the created APIs can be used to interact with the GraphQL data, to write or read data. Since we are working with data now and not creating schema you will need to swtich to the `graphql` tab. Also, ensure to fill in your Astra DB token again.
 
 - *Fill the header token again*
+
 ```json
 {
   "x-cassandra-token":"AstraCS:KDfdKeNREyWQvDpDrBqwBsUB:ec80667c...."
@@ -546,6 +608,7 @@ Then paste in the following query and click "play".
 ![Screen Shot 2021-05-20 at 9 17 35 AM](https://user-images.githubusercontent.com/23346205/118985407-6c444a80-b94c-11eb-9b7d-d83e35e40bf1.png)
 
 - *Execute this query*
+
 ```
 mutation insert2KV {
   key1: insertkey_value(value: {key:"key1", value:"bbbb"}) {
@@ -572,6 +635,7 @@ select * from key_value;
 ![image](images/graphql2.png?raw=true)
 
 - *Execute this query*
+
 ```
 mutation insert2KV {
   key1: insertkey_value(value: {key:"key1", value:"cccc"}) {
@@ -590,7 +654,7 @@ mutation insert2KV {
 
 > **Graph databases** store their data using a graph metaphor to exploit the relationships between data. Nodes in the graph represent data items, and edges represent the relationships between the data items. Graph databases are designed for highly complex and connected data, which outpaces the relationship and JOIN capabilities of an RDBMS. Graph databases are often exceptionally good at finding commonalities and anomalies among large data sets. Examples of Graph databases include DataStax Graph, Neo4J, JanusGraph, and Amazon Neptune.
 
-Astra DB does not contain yet a way to implement Graph Databases use cases. But at Datastax Company we do have a product called [DataStax Graph](https://www.datastax.com/products/datastax-graph) that you can use for free when not in production.
+Astra DB does not contain yet a way to implement Graph Databases use cases. But at Datastax we do have a product called [DataStax Graph](https://www.datastax.com/products/datastax-graph) that you can use for free when not in production.
 
 Today it will be a demo to be quick but you can as well do and start the demo with the following steps
 
