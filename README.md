@@ -1,4 +1,4 @@
-## 🎓🔥 Introduction to NotOnly SQL Databases
+## 🎓🔥 Introduction to NotOnly SQL (NoSQL) Databases
 
 [![License Apache2](https://img.shields.io/hexpm/l/plug.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Discord](https://img.shields.io/discord/685554030159593522)](https://discord.com/widget?id=685554030159593522&theme=dark)
@@ -587,7 +587,7 @@ describe table key_value;
 
 **✅ 4c. Populate the table**
 
-Any of the created APIs can be used to interact with the GraphQL data, to write or read data. Since we are working with data now and not creating schema you will need to swtich to the `graphql` tab. Also, ensure to fill in your Astra DB token again.
+Any of the created APIs can be used to interact with the GraphQL data, to write or read data. Since we are working with data now and not creating schema you will need to **swtich to the `graphql` tab**. Also, make sure you **fill in your Astra DB token again**.
 
 - *Fill the header token again*
 
@@ -599,7 +599,7 @@ Any of the created APIs can be used to interact with the GraphQL data, to write 
 
 ![Screen Shot 2021-05-20 at 9 04 47 AM](https://user-images.githubusercontent.com/23346205/118983681-af9db980-b94a-11eb-82b7-e0c852701265.png)
 
-Now, let’s navigate to your new keyspace `nosql1` inside the playground. Change tab to graphql and pick url `/graphql/nosql1`
+Now, let’s navigate to your new keyspace `nosql1` inside the playground. **Change tab to `graphql`** and pick url `/graphql/nosql1`. Your URL should end with something like `/api/graphql/nosql1`. If you have trouble ensuring this, switch back to the `graphql-schema` tab to grab the URL and applying some surgery on it to use the end point that includes `graphql` aand the keyspace `nosql1` so that it ends with `/api/graphql/nosql1` as explained earlier.
 
 ![Screen Shot 2021-05-20 at 9 13 26 AM](https://user-images.githubusercontent.com/23346205/118985049-1d96b080-b94c-11eb-87c4-0340e941d37c.png)
 
