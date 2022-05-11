@@ -20,9 +20,9 @@ It doesn't matter if you join our workshop live or you prefer to do at your own 
 
 To get the verified badge, you have to complete the following steps:
 
-1. Complete the practice steps of this workshop as explained below, steps I-IV are mandatory, step V is optional. Take a screenshot of the last completed step for  steps II, III and IV. _NOTE: When taking screenshots ensure NOT to copy your Astra DB key!_
-2. Complete [try-it-out scenario](https://www.datastax.com/try-it-out) and make a screenshot of the "scenario completed" screen
-3. Submit the practice [here](https://dtsx.io/nosql-ws-hw), answering test questions and attaching the screenshots.
+1. Complete the practice steps of this workshop as explained below. Steps 1-4 (account, tabular, document, key-value) are mandatory, step 5 (graph database) is optional. Take a screenshot of the last completed step for  steps 2, 3 and 4. _NOTE: When taking screenshots ensure NOT to copy your Astra DB secrets!_
+<!-- x. Complete [try-it-out scenario](https://www.datastax.com/try-it-out) and make a screenshot of the "scenario completed" screen -->
+2. Submit the practice [here](https://dtsx.io/nosql-ws-hw), answering test questions and attaching the screenshots.
 
 ## Practice
 
@@ -33,15 +33,15 @@ To get the verified badge, you have to complete the following steps:
 5. [Graph Databases](#5-graph-databases)
 
 ## 1. Login or Register to AstraDB and create database
-**`ASTRADB`** is the simplest way to run Cassandra with zero operations at all - just push the button and get your cluster. No credit card required, roughly 20M reads/writes and 80GB storage per month for FREE - sufficient to run small production workloads.  
 
-✅ **Step 1a:** Click the button to login or register with Datastax. You can use your `Github`, `Google` accounts or register with an `email`.
+**`ASTRADB`** is the simplest way to run Cassandra with zero operations at all - just push the button and get your cluster. No credit card required,
+a monthly free credit to use, covering about 20M reads/writes and 80GB storage (sufficient to run small production workloads), all for FREE.
 
-_Make sure to chose a password with minimum 8 characters, containing upper and lowercase letters, at least one number and special character_
+✅ **Step 1a:** Click the button below to login or register with Datastax. You can use your `Github`, `Google` accounts or register with an `email`.
 
 <a href="https://astra.dev/2-9"><img src="https://github.com/datastaxdevs/workshop-graphql-netflix/raw/master/img/create_astra_db.png?raw=true" /></a>
 
-**Use the following values when creating the database**
+**Use the following values when creating the database** (this makes your life easier further on):
 
 |Field| Value|
 |---|---|
@@ -49,8 +49,7 @@ _Make sure to chose a password with minimum 8 characters, containing upper and l
 |**keyspace**| `nosql1` |
 |**Cloud Provider**| *Use the one you like, click a cloud provider logo, pick an Area in the list and finally pick a region.* |
 
-
-_You can technically use whatever you want and update the code to reflect the keyspace. This is really to get you on a happy path for the first run._
+More info on account creation [here](https://awesome-astra.github.io/docs/pages/astra/create-account/).
 
 #### You will see your new database in `pending` or `initailizing` on the Dashboard.
 
@@ -81,44 +80,44 @@ describe keyspaces;
 
 ![image](images/03.png?raw=true)
 
-**✅ 2b. Create tables**
+**✅ 2b. Create table**
 
 - *Execute the following Cassandra Query Language* 
 
 ```sql
-use nosql1;
+USE nosql1;
 
-CREATE TABLE IF NOT EXISTS videos (
- videoid   uuid,
- email     text,
- title     text,
- upload    timestamp,
- url       text,
- tags      set <text>,
- frames    list<int>,
- PRIMARY KEY (videoid)
-);
+CREATE TABLE IF NOT EXISTS accounts_by_user (
+  user_id         UUID,
+  account_id      UUID,
+  account_type    TEXT,
+  account_balance DECIMAL,
+  user_name       TEXT      STATIC,
+  user_email      TEXT      STATIC,
+  PRIMARY KEY ( (user_id), account_id)
+)   WITH CLUSTERING ORDER BY (account_id ASC);
 ```
 
 - *Visualize structure*
 
 ```sql
-describe keyspace nosql1;
+DESCRIBE KEYSPACE nosql1;
 ```
 **👁️ Expected output**
 
 ```
-CREATE KEYSPACE nosql1 WITH replication = {'class': 'NetworkTopologyStrategy', 'us-east1': '3'}  AND durable_writes = true;
+CREATE KEYSPACE nosql1 WITH replication = {'class': 'NetworkTopologyStrategy', 'eu-central-1': '3'}  AND durable_writes = true;
 
-CREATE TABLE nosql1.videos (
-    videoid uuid PRIMARY KEY,
-    email text,
-    frames list<int>,
-    tags set<text>,
-    title text,
-    upload timestamp,
-    url text
-) WITH additional_write_policy = '99PERCENTILE'
+CREATE TABLE nosql1.accounts_by_user (
+    user_id uuid,
+    account_id uuid,
+    account_balance decimal,
+    account_type text,
+    user_email text static,
+    user_name text static,
+    PRIMARY KEY (user_id, account_id)
+) WITH CLUSTERING ORDER BY (account_id ASC)
+    AND additional_write_policy = '99PERCENTILE'
     AND bloom_filter_fp_chance = 0.01
     AND caching = {'keys': 'ALL', 'rows_per_partition': 'NONE'}
     AND comment = ''
@@ -139,131 +138,168 @@ CREATE TABLE nosql1.videos (
 - *Insert some entries on first table*
 
 ```sql
-INSERT INTO videos(videoid, email, title, upload, url, tags, frames)
-VALUES(uuid(), 
-     'clu@sample.com', 
-     'Introduction to Nosql Databases', 
-     toTimeStamp(now()), 
-     'https://www.youtube.com/watch?v=cMDHxsGbmC8',
-     { 'nosql','workshop','2021'}, 
-     [ 1, 2, 3, 4]);
-     
-INSERT INTO videos(videoid, email, title, upload, url)
-VALUES(uuid(), 
-      'clu@sample.com', 
-      'Demo video Y', 
-      toTimeStamp(now()), 
-      'https://www.youtube.com/watch?v=XXXX');
+INSERT INTO accounts_by_user(user_id, account_id, account_balance, account_type, user_email, user_name)
+VALUES(
+    1cafb6a4-396c-4da1-8180-83531b6a41e3,
+    811b56c3-cead-40d9-9a3d-e230dcd64f2f,
+    1500,
+    'Savings',
+    'Alice',
+    'alice@example.org'
+);
 
-INSERT INTO videos(videoid, email, title, upload, url)
-VALUES(e466f561-4ea4-4eb7-8dcc-126e0fbfd573, 
-      'clu@sample.com', 
-      'Yet another video', 
-      toTimeStamp(now()), 
-      'https://www.youtube.com/watch?v=ABCDE');
+INSERT INTO accounts_by_user(user_id, account_id, account_balance, account_type)
+VALUES(
+    1cafb6a4-396c-4da1-8180-83531b6a41e3,
+    83428a85-5c8f-4398-8019-918d6e1d3a93,
+    2500,
+    'Checking'
+);
+
+INSERT INTO accounts_by_user(user_id, account_id, account_balance, account_type, user_email, user_name)
+VALUES(
+    0d2b2319-9c0b-4ecb-8953-98687f6a99ce,
+    81def5e2-84f4-4885-a920-1c14d2be3c20,
+    1000,
+    'Checking',
+    'Bob',
+    'bob@example.org'
+);
 ```
 
 - *Read values*
 
 ```sql
-select * from videos;
+SELECT * FROM accounts_by_user;
 ```
 
 **👁️ Expected output**
 
 ```
- videoid                              | email          | frames       | tags                          | title                           | upload                          | url
---------------------------------------+----------------+--------------+-------------------------------+---------------------------------+---------------------------------+---------------------------------------------
- a5ab4896-7caa-4d85-ae2b-b0bbfd7e074f | clu@sample.com |         null |                          null |                    Demo video Y | 2022-02-07 21:51:43.469000+0000 |        https://www.youtube.com/watch?v=XXXX
- e466f561-4ea4-4eb7-8dcc-126e0fbfd573 | clu@sample.com |         null |                          null |               Yet another video | 2022-02-07 21:52:06.549000+0000 |       https://www.youtube.com/watch?v=ABCDE
- f22076f3-c920-4bad-8eb8-e730f68099b1 | clu@sample.com | [1, 2, 3, 4] | {'2021', 'nosql', 'workshop'} | Introduction to Nosql Databases | 2022-02-07 21:52:06.534000+0000 | https://www.youtube.com/watch?v=cMDHxsGbmC8
- b6a4e555-d2c0-4913-adc5-70fc816ef9c9 | clu@sample.com |         null |                          null |                    Demo video Y | 2022-02-07 21:52:06.544000+0000 |        https://www.youtube.com/watch?v=XXXX
+ user_id                              | account_id                           | user_email | user_name         | account_balance | account_type
+--------------------------------------+--------------------------------------+------------+-------------------+-----------------+--------------
+ 0d2b2319-9c0b-4ecb-8953-98687f6a99ce | 81def5e2-84f4-4885-a920-1c14d2be3c20 |        Bob |   bob@example.org |            1000 |     Checking
+ 1cafb6a4-396c-4da1-8180-83531b6a41e3 | 811b56c3-cead-40d9-9a3d-e230dcd64f2f |      Alice | alice@example.org |            1500 |      Savings
+ 1cafb6a4-396c-4da1-8180-83531b6a41e3 | 83428a85-5c8f-4398-8019-918d6e1d3a93 |      Alice | alice@example.org |            2500 |     Checking
 
-(4 rows)
+(3 rows)
 ```
 
-- *Read by id*
+> Notice that all three rows are "filled with data", despite the second insertion above skipping the `user_email` and `user_name` columns:
+> this is because these are **static columns** (i.e. associated to the whole partition) and in this case their value had been written already.
+
+- *Read by primary key*
 
 ```sql
-select * from videos 
-where videoid=e466f561-4ea4-4eb7-8dcc-126e0fbfd573;
+SELECT user_email, account_type, account_balance
+  FROM accounts_by_user
+  WHERE user_id=0d2b2319-9c0b-4ecb-8953-98687f6a99ce
+    AND account_id=81def5e2-84f4-4885-a920-1c14d2be3c20;
 ```
 
 **👁️ Expected output**
 
 ```
- videoid                              | email          | frames | tags | title             | upload                          | url
---------------------------------------+----------------+--------+------+-------------------+---------------------------------+---------------------------------------
- e466f561-4ea4-4eb7-8dcc-126e0fbfd573 | clu@sample.com |   null | null | Yet another video | 2022-02-07 21:52:06.549000+0000 | https://www.youtube.com/watch?v=ABCDE
+ user_email | account_type | account_balance
+------------+--------------+-----------------
+        Bob |     Checking |            1000
 
 (1 rows)
 ```
-
 
 **✅ 2d. Working with PARTITIONS** :
 
 But data can be grouped, we stored together what should be retrieved together.
 
-- *Create this new table*
-
-```sql
-CREATE TABLE IF NOT EXISTS users_by_city (
- city      text,
- firstname text,
- lastname  text,
- email     text,
- PRIMARY KEY ((city), lastname, email)
-) WITH CLUSTERING ORDER BY(lastname ASC, email ASC);
+</details><summary>- *Try a query not compatible with the data model* (optional, click to expand)</summary>
 
 ```
-- *Insert some entries*
-
-```sql
-INSERT INTO users_by_city(city, firstname, lastname, email) 
-VALUES('PARIS', 'Lunven', 'Cedrick', 'clu@sample.com');
-
-INSERT INTO users_by_city(city, firstname, lastname, email) 
-VALUES('PARIS', 'Yellow', 'Jackets', 'yj@sample.com');
-
-INSERT INTO users_by_city(city, firstname, lastname, email) 
-VALUES('ORLANDO', 'David', 'Gilardi', 'dgi@sample.com');
+SELECT account_id, account_type, account_balance
+   FROM accounts_by_user
+   WHERE account_id=81def5e2-84f4-4885-a920-1c14d2be3c20;
 ```
 
-- *List values with partitions keys*
+<!-- ```
+InvalidRequest: Error from server: code=2200 [Invalid query] message="Cannot execute this query as it might involve data filtering and thus may have unpredictable performance. If you want to execute this query despite the performance unpredictability, use ALLOW FILTERING"
+```
+ -->
 
-```sql
-SELECT * from users_by_city WHERE city='PARIS';
+**`Yes, we know`**, and now let's see why.
+
+```
+TRACING ON;
+SELECT account_id, account_type, account_balance
+   FROM accounts_by_user
+   WHERE account_id=81def5e2-84f4-4885-a920-1c14d2be3c20
+   ALLOW FILTERING;
+TRACING OFF;
 ```
 
-<!--
+> _Note_: `ALLOW FILTERING` is almost never to be used in production, we use it here to see what happens!
 
-- *List values without partitions keys*
+**👁️ Output**
 
-```sql
-SELECT * from users_by_city WHERE lastname='Gilardi';
+```
+ account_id                           | account_type | account_balance
+--------------------------------------+--------------+-----------------
+ 81def5e2-84f4-4885-a920-1c14d2be3c20 |     Checking |            1000
+
+(1 rows)
 ```
 
-**`Yes we know`** and we will explain why.
+But also (_"Anatomy of a full-cluster scan"_):
 
-- *Same query with debugging enabled*
+```
+Tracing session: e97b98b0-d146-11ec-a4e5-19251c2b96e1
 
-```sql
-tracing on;
-SELECT * from users_by_city WHERE city='PARIS';
+ activity                                                                                                                   | timestamp                  | source      | source_elapsed | client
+----------------------------------------------------------------------------------------------------------------------------+----------------------------+-------------+----------------+-----------------------------------------
+                                                                                                         Execute CQL3 query | 2022-05-11 16:25:03.675000 | 10.0.63.218 |              0 | 2898:d2d9:30d9:4a4f:acec:3e3a:3a76:4a7b
+ Parsing SELECT[....]_by_user\n   WHERE account_id=81def5e2-84f4-4885-a920-1c14d2be3c20\n   ALLOW FILTERING; [CoreThread-0] | 2022-05-11 16:25:03.676000 | 10.0.63.218 |            229 | 2898:d2d9:30d9:4a4f:acec:3e3a:3a76:4a7b
+                                                                                         Preparing statement [CoreThread-0] | 2022-05-11 16:25:03.676000 | 10.0.63.218 |            445 | 2898:d2d9:30d9:4a4f:acec:3e3a:3a76:4a7b
+                                                                                Computing ranges to query... [CoreThread-0] | 2022-05-11 16:25:03.681000 | 10.0.63.218 |           5970 | 2898:d2d9:30d9:4a4f:acec:3e3a:3a76:4a7b
+                                                         READS.RANGE_READ message received from /10.0.63.218 [CoreThread-9] | 2022-05-11 16:25:03.682000 | 10.0.31.189 |             -- | 2898:d2d9:30d9:4a4f:acec:3e3a:3a76:4a7b
+                Submitting range requests on 25 ranges with a concurrency of 1 (0.0 rows per range expected) [CoreThread-0] | 2022-05-11 16:25:03.682000 | 10.0.63.218 |           6197 | 2898:d2d9:30d9:4a4f:acec:3e3a:3a76:4a7b
+                                                                       Submitted 1 concurrent range requests [CoreThread-0] | 2022-05-11 16:25:03.682000 | 10.0.63.218 |           6312 | 2898:d2d9:30d9:4a4f:acec:3e3a:3a76:4a7b
+                                             Sending READS.RANGE_READ message to /10.0.32.75, size=227 bytes [CoreThread-9] | 2022-05-11 16:25:03.682000 | 10.0.63.218 |           6436 | 2898:d2d9:30d9:4a4f:acec:3e3a:3a76:4a7b
+                                            Sending READS.RANGE_READ message to /10.0.31.189, size=227 bytes [CoreThread-8] | 2022-05-11 16:25:03.682000 | 10.0.63.218 |           6436 | 2898:d2d9:30d9:4a4f:acec:3e3a:3a76:4a7b
+                                                         READS.RANGE_READ message received from /10.0.63.218 [CoreThread-4] | 2022-05-11 16:25:03.683000 |  10.0.32.75 |             -- | 2898:d2d9:30d9:4a4f:acec:3e3a:3a76:4a7b
+             Executing seq scan across 0 sstables for (min(-9223372036854775808), min(-9223372036854775808)] [CoreThread-4] | 2022-05-11 16:25:03.683000 |  10.0.32.75 |            444 | 2898:d2d9:30d9:4a4f:acec:3e3a:3a76:4a7b
+             Executing seq scan across 0 sstables for (min(-9223372036854775808), min(-9223372036854775808)] [CoreThread-9] | 2022-05-11 16:25:03.684000 | 10.0.31.189 |            356 | 2898:d2d9:30d9:4a4f:acec:3e3a:3a76:4a7b
+                                                                       Read 1 live rows and 0 tombstone ones [CoreThread-4] | 2022-05-11 16:25:03.684000 |  10.0.32.75 |            789 | 2898:d2d9:30d9:4a4f:acec:3e3a:3a76:4a7b
+                                                                       Read 1 live rows and 0 tombstone ones [CoreThread-9] | 2022-05-11 16:25:03.684000 | 10.0.31.189 |            731 | 2898:d2d9:30d9:4a4f:acec:3e3a:3a76:4a7b
+                                                          Enqueuing READS.RANGE_READ response to /10.0.32.75 [CoreThread-4] | 2022-05-11 16:25:03.684000 |  10.0.32.75 |            897 | 2898:d2d9:30d9:4a4f:acec:3e3a:3a76:4a7b
+                                                         Enqueuing READS.RANGE_READ response to /10.0.31.189 [CoreThread-9] | 2022-05-11 16:25:03.684000 | 10.0.31.189 |            731 | 2898:d2d9:30d9:4a4f:acec:3e3a:3a76:4a7b
+                                            Sending READS.RANGE_READ message to /10.0.63.218, size=212 bytes [CoreThread-7] | 2022-05-11 16:25:03.684000 |  10.0.32.75 |            954 | 2898:d2d9:30d9:4a4f:acec:3e3a:3a76:4a7b
+                                            Sending READS.RANGE_READ message to /10.0.63.218, size=212 bytes [CoreThread-1] | 2022-05-11 16:25:03.684000 | 10.0.31.189 |           1098 | 2898:d2d9:30d9:4a4f:acec:3e3a:3a76:4a7b
+                                                          READS.RANGE_READ message received from /10.0.32.75 [CoreThread-9] | 2022-05-11 16:25:03.685000 | 10.0.63.218 |           9626 | 2898:d2d9:30d9:4a4f:acec:3e3a:3a76:4a7b
+                                                         READS.RANGE_READ message received from /10.0.31.189 [CoreThread-1] | 2022-05-11 16:25:03.702000 | 10.0.63.218 |          27526 | 2898:d2d9:30d9:4a4f:acec:3e3a:3a76:4a7b
+                                                                        Processing response from /10.0.32.75 [CoreThread-0] | 2022-05-11 16:25:03.856000 | 10.0.63.218 |         181075 | 2898:d2d9:30d9:4a4f:acec:3e3a:3a76:4a7b
+                                                                       Processing response from /10.0.31.189 [CoreThread-0] | 2022-05-11 16:25:03.856000 | 10.0.63.218 |         181193 | 2898:d2d9:30d9:4a4f:acec:3e3a:3a76:4a7b
+Didn't get enough response rows; actual rows per range: 0.04; remaining rows: 99, new concurrent requests: 1 [CoreThread-0] | 2022-05-11 16:25:03.856000 | 10.0.63.218 |         181384 | 2898:d2d9:30d9:4a4f:acec:3e3a:3a76:4a7b
+                                                                                                           Request complete | 2022-05-11 16:25:03.856560 | 10.0.63.218 |         181560 | 2898:d2d9:30d9:4a4f:acec:3e3a:3a76:4a7b
 ```
 
-- *Forcing Full Scan = SLOW*
+</details>
+
+- *Retrieve data from a whole partition*
 
 ```sql
-SELECT * from users_by_city WHERE lastname='Gilardi' ALLOW FILTERING;
+SELECT account_id, account_type, account_balance
+  FROM accounts_by_user
+  WHERE user_id=1cafb6a4-396c-4da1-8180-83531b6a41e3;
 ```
 
-- *Stop debugging*
+**👁️ Expected output**
 
-```sql
-tracing off;
 ```
--->
+ account_id                           | account_type | account_balance
+--------------------------------------+--------------+-----------------
+ 811b56c3-cead-40d9-9a3d-e230dcd64f2f |      Savings |            1500
+ 83428a85-5c8f-4398-8019-918d6e1d3a93 |     Checking |            2500
+
+(2 rows)
+```
 
 [🏠 Back to Table of Contents](#table-of-content)
 
@@ -656,16 +692,20 @@ mutation insert2KV {
 
 Astra DB does not contain yet a way to implement Graph Databases use cases. But at Datastax we do have a product called [DataStax Graph](https://www.datastax.com/products/datastax-graph) that you can use for free when not in production.
 
-The practice on Graph Databases, that cannot be done in the browser using
-Astra DB, is usually done as a demo by the presenter.
+For graph databases, the presenter will show a demo based on the example in the slides.
 
-But you are encouraged to try it at your own pace, on your own computer,
-by following the instructions given here: [Graph Databases Practice](graph_databases.md).
+The practice is based on another example. Since it cannot be done in the browser using
+Astra DB like the rest, it is kept separate and not included in today's curriculum.
 
-[🏠 Back to Table of Contents](#table-of-content)
+🔥 Yet, you are strongly encouraged to try it at your own pace, on your own computer,
+by following the instructions given here: [Graph Databases Practice](graph_databases.md). 🔥
+
+> Try it out, it's super cool!
 
 ## THE END
 
 Congratulations! You made it to the END.
 
 See you next time!
+
+[🏠 Back to Table of Contents](#table-of-content)
