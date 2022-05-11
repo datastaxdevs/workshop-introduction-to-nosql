@@ -391,7 +391,7 @@ go the "Connect" page, stay in the "Document API" subpage, and locate the URL un
 
 ![image](images/connect.png?raw=true)
 
-Locate the "documents" section in the Swagger UI.
+Locate the "documents" section in the Swagger UI. You are now ready to fire requests to the Document API.
 
 ![image](images/05.png?raw=true)
 
@@ -410,7 +410,19 @@ Locate the "documents" section in the Swagger UI.
 ```
 - Click `Execute` button
 
-You will get an _"HTTP 201 - Created"_ return code
+You will get an `HTTP 201 - Created` return code.
+
+> _Note:_ the response you just got from actually calling the API endpoint
+> is given under the "Server response" heading. Do not confuse it with
+> the "Responses" found immediately after, which are simply a documentation
+> of all possible response codes (and the return object they quote are static
+> example JSONs).
+
+<details><summary>Click to show a screenshot</summary>
+  
+![image](images/images/swagger_responses_annotated.png?raw=true)
+
+</details>
 
 ### ✅ 3d. Create new documents
 
@@ -441,7 +453,7 @@ You will get an _"HTTP 201 - Created"_ return code
 ```
 - Click `Execute` button
 
-_👁️ Expected output (your ID will be different)_
+_👁️ Expected output (your `documentId` will be different)_
 
 ```json
 {
@@ -473,9 +485,9 @@ Repeat with the following body, which has _a different structure_:
 }
 ```
 
-As before, the document will automatically be given an internal unique ID.
+As before, the document will automatically be given an internal unique `documentId`.
 
-**✅ 3e Find all documents of a collection** :
+### ✅ 3e Find all documents in a collection
 
 ![Swagger 3e](images/swagger/swagger_3e.png)
 
@@ -483,37 +495,51 @@ As before, the document will automatically be given an internal unique ID.
 - Click `Try it out` button
 - Fill Header `X-Cassandra-Token` with `<your_token>`
 - For `namespace-id` use `nosql1`
-- For `collection-id` use `col1`
+- For `collection-id` use `users`
 
-Let other fields blank every query is paged in Cassandra.
+Leave other fields blank (in particular, every query is paged in Cassandra).
 
 - Click `Execute` button
 
-**👁️ Expected output**:
+_👁️ Expected output (take note of the `documentId`s of your output for later)_
+
 ```json
 {
   "data": {
-    "84bd6ebc-a274-4dc3-ae7c-eb2fd913331b": {
-      "email": "clunven@sample.com",
-      "formats": {
-        "mp4": {
-          "height": 1,
-          "width": 1
+    "6d0aafd9-3c2c-461f-92c6-08322eaef5da": {
+      "accounts": [
+        {
+          "balance": "2500",
+          "id": "83428a85-5c8f-4398-8019-918d6e1d3a93",
+          "type": "Checking"
         },
-        "ogg": {
-          "height": 1,
-          "width": 1
+        {
+          "balance": "1500",
+          "id": "811b56c3-cead-40d9-9a3d-e230dcd64f2f",
+          "type": "Savings"
         }
-      },
-      "frames": [
-        1,
-        2,
-        3,
-        4
-        ...
+      ],
+      "email": "alice@example.org",
+      "id": "1cafb6a4-396c-4da1-8180-83531b6a41e3",
+      "name": "Alice"
+    },
+    "137d8609-87f6-4cb7-9506-e52f338e79e9": {
+      "accounts": [
+        {
+          "balance": "1000",
+          "id": "81def5e2-84f4-4885-a920-1c14d2be3c20",
+          "type": "Checking"
+        }
+      ],
+      "email": "bob@example.org",
+      "id": "0d2b2319-9c0b-4ecb-8953-98687f6a99ce",
+      "name": "Bob"
+    }
+  }
+}
 ```
 
-**✅ 3f Retrieve a document from its id** :
+### ✅ 3f Retrieve a document by ID its id
 
 ![Swagger 3f](images/swagger/swagger_3f.png)
 
@@ -521,46 +547,31 @@ Let other fields blank every query is paged in Cassandra.
 - Click `Try it out` button
 - Fill Header `X-Cassandra-Token` with `<your_token>`
 - For `namespace-id` use `nosql1`
-- For `collection-id` use `col1`
-- For `document-id` use `<doc_id_in_previous_call>`
+- For `collection-id` use `users`
+- For `document-id` use Bob's `documentId` (e.g. `137d8609-87f6-4cb7-9506-e52f338e79e9` in the above sample output)
 - Click `Execute` button
 
-**👁️ Expected output**:
+_👁️ Expected output_
+
 ```json
 {
-  "documentId": "84bd6ebc-a274-4dc3-ae7c-eb2fd913331b",
+  "documentId": "137d8609-87f6-4cb7-9506-e52f338e79e9",
   "data": {
-    "email": "clunven@sample.com",
-    "formats": {
-      "mp4": {
-        "height": 1,
-        "width": 1
-      },
-      "ogg": {
-        "height": 1,
-        "width": 1
+    "accounts": [
+      {
+        "balance": "1000",
+        "id": "81def5e2-84f4-4885-a920-1c14d2be3c20",
+        "type": "Checking"
       }
-    },
-    "frames": [
-      1,
-      2,
-      3,
-      4
     ],
-    "tags": [
-      "cassandra",
-      "accelerate",
-      "2020"
-    ],
-    "title": "A Second videos",
-    "upload": "2020-02-26 15:09:22 +00:00",
-    "url": "http://google.fr",
-    "videoid": "e466f561-4ea4-4eb7-8dcc-126e0fbfd573"
+    "email": "bob@example.org",
+    "id": "0d2b2319-9c0b-4ecb-8953-98687f6a99ce",
+    "name": "Bob"
   }
 }
 ```
 
-**✅ 3g Search document from a where clause** :
+### ✅ 3g Search document with a "where" clause
 
 ![Swagger 3g](images/swagger/swagger_3g.png)
 
@@ -568,41 +579,30 @@ Let other fields blank every query is paged in Cassandra.
 - Click `Try it out` button
 - Fill Header `X-Cassandra-Token` with `<your_token>`
 - For `namespace-id` use `nosql1`
-- For `collection-id` use `col1`
-- For `where` use `{"email":    { "$eq":"clunven@sample.com" } } `
+- For `collection-id` use `users`
+- For `where` use `{"name": {"$eq": "Alice"}}`
 - Click `Execute` button
 
 *👁️ Expected output*
 ```json
 {
   "data": {
-    "84bd6ebc-a274-4dc3-ae7c-eb2fd913331b": {
-      "email": "clunven@sample.com",
-      "formats": {
-        "mp4": {
-          "height": 1,
-          "width": 1
+    "6d0aafd9-3c2c-461f-92c6-08322eaef5da": {
+      "accounts": [
+        {
+          "balance": "2500",
+          "id": "83428a85-5c8f-4398-8019-918d6e1d3a93",
+          "type": "Checking"
         },
-        "ogg": {
-          "height": 1,
-          "width": 1
+        {
+          "balance": "1500",
+          "id": "811b56c3-cead-40d9-9a3d-e230dcd64f2f",
+          "type": "Savings"
         }
-      },
-      "frames": [
-        1,
-        2,
-        3,
-        4
       ],
-      "tags": [
-        "cassandra",
-        "accelerate",
-        "2020"
-      ],
-      "title": "A Second videos",
-      "upload": "2020-02-26 15:09:22 +00:00",
-      "url": "http://google.fr",
-      "videoid": "e466f561-4ea4-4eb7-8dcc-126e0fbfd573"
+      "email": "alice@example.org",
+      "id": "1cafb6a4-396c-4da1-8180-83531b6a41e3",
+      "name": "Alice"
     }
   }
 }
