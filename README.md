@@ -67,13 +67,17 @@ At Database creation you provided a keyspace, a logical grouping for tables.
 Let's visualize it.
 In Astra DB go to CQL Console to enter the following commands
 
-- *Select your db*
+#### Select your db
+
 ![image](images/01.png?raw=true)
 
-- *Select CqlConsole*
+#### Go to the Cql Console
 ![image](images/02.png?raw=true)
 
-- *Enter the command*
+#### Enter the describe command
+
+... and press Enter:
+
 ```sql
 DESCRIBE KEYSPACES;
 ```
@@ -103,7 +107,8 @@ CREATE TABLE IF NOT EXISTS accounts_by_user (
 ```sql
 DESCRIBE KEYSPACE nosql1;
 ```
-**👁️ Expected output**
+
+_👁️ Expected output_
 
 ```
 CREATE KEYSPACE nosql1 WITH replication = {'class': 'NetworkTopologyStrategy', 'eu-central-1': '3'}  AND durable_writes = true;
@@ -173,7 +178,7 @@ VALUES(
 SELECT * FROM accounts_by_user;
 ```
 
-**👁️ Expected output**
+_👁️ Expected output_
 
 ```
  user_id                              | account_id                           | user_email | user_name         | account_balance | account_type
@@ -197,7 +202,7 @@ SELECT user_email, account_type, account_balance
     AND account_id=81def5e2-84f4-4885-a920-1c14d2be3c20;
 ```
 
-**👁️ Expected output**
+_👁️ Expected output_
 
 ```
  user_email | account_type | account_balance
@@ -239,7 +244,7 @@ TRACING OFF;
 
 > _Note_: `ALLOW FILTERING` is almost never to be used in production, we use it here to see what happens!
 
-**👁️ Output**
+_👁️ Output_
 
 ```
  account_id                           | account_type | account_balance
@@ -292,7 +297,7 @@ SELECT account_id, account_type, account_balance
   WHERE user_id=1cafb6a4-396c-4da1-8180-83531b6a41e3;
 ```
 
-**👁️ Expected output**
+_👁️ Expected output_
 
 ```
  account_id                           | account_type | account_balance
