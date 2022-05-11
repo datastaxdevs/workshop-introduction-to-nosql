@@ -86,7 +86,9 @@ DESCRIBE KEYSPACES;
 
 ### ✅ 2b. Create table
 
-- *Execute the following Cassandra Query Language commands:*
+#### Table creation
+
+Execute the following Cassandra Query Language commands
 
 ```sql
 USE nosql1;
@@ -102,7 +104,9 @@ CREATE TABLE IF NOT EXISTS accounts_by_user (
 )   WITH CLUSTERING ORDER BY (account_id ASC);
 ```
 
-- *Visualize keyspace structure:*
+#### Check
+
+Check keyspace contents and structure:
 
 ```sql
 DESCRIBE KEYSPACE nosql1;
@@ -149,8 +153,8 @@ VALUES(
     811b56c3-cead-40d9-9a3d-e230dcd64f2f,
     1500,
     'Savings',
-    'Alice',
-    'alice@example.org'
+    'alice@example.org',
+    'Alice'
 );
 
 INSERT INTO accounts_by_user(user_id, account_id, account_balance, account_type)
@@ -167,8 +171,8 @@ VALUES(
     81def5e2-84f4-4885-a920-1c14d2be3c20,
     1000,
     'Checking',
-    'Bob',
-    'bob@example.org'
+    'bob@example.org',
+    'Bob'
 );
 ```
 
@@ -181,11 +185,11 @@ SELECT * FROM accounts_by_user;
 _👁️ Expected output_
 
 ```
- user_id                              | account_id                           | user_email | user_name         | account_balance | account_type
---------------------------------------+--------------------------------------+------------+-------------------+-----------------+--------------
- 0d2b2319-9c0b-4ecb-8953-98687f6a99ce | 81def5e2-84f4-4885-a920-1c14d2be3c20 |        Bob |   bob@example.org |            1000 |     Checking
- 1cafb6a4-396c-4da1-8180-83531b6a41e3 | 811b56c3-cead-40d9-9a3d-e230dcd64f2f |      Alice | alice@example.org |            1500 |      Savings
- 1cafb6a4-396c-4da1-8180-83531b6a41e3 | 83428a85-5c8f-4398-8019-918d6e1d3a93 |      Alice | alice@example.org |            2500 |     Checking
+ user_id                              | account_id                           | user_email        | user_name | account_balance | account_type
+--------------------------------------+--------------------------------------+-------------------+-----------+-----------------+--------------
+ 0d2b2319-9c0b-4ecb-8953-98687f6a99ce | 81def5e2-84f4-4885-a920-1c14d2be3c20 |   bob@example.org |       Bob |            1000 |     Checking
+ 1cafb6a4-396c-4da1-8180-83531b6a41e3 | 811b56c3-cead-40d9-9a3d-e230dcd64f2f | alice@example.org |     Alice |            1500 |      Savings
+ 1cafb6a4-396c-4da1-8180-83531b6a41e3 | 83428a85-5c8f-4398-8019-918d6e1d3a93 | alice@example.org |     Alice |            2500 |     Checking
 
 (3 rows)
 ```
@@ -205,9 +209,9 @@ SELECT user_email, account_type, account_balance
 _👁️ Expected output_
 
 ```
- user_email | account_type | account_balance
-------------+--------------+-----------------
-        Bob |     Checking |            1000
+ user_email      | account_type | account_balance
+-----------------+--------------+-----------------
+ bob@example.org |     Checking |            1000
 
 (1 rows)
 ```
@@ -316,71 +320,74 @@ Let's do some hands-on with document database queries.
 
 > **Document databases** expand on the basic idea of key-value stores where “documents” are more complex, in that they contain data and each document is assigned a unique key, which is used to retrieve the document. These are designed for storing, retrieving, and managing document-oriented information, often stored as JSON. Since the Document database can inspect the document contents, the database can perform some additional retrieval processing. Unlike RDBMSs which require a static schema, Document databases have a flexible schema as defined by the document contents. Examples include: MongoDB and CouchDB. Note that some RDBMS and NoSQL databases outside of pure document stores are able to store and query JSON documents, including Cassandra.
 
-**✅ 3a. Cassandra knows JSON** :
+### ✅ 3a. Cassandra native JSON support
 
 It is not a known fact but Cassandra accepts JSON query out of the box. You can find more information [here](https://docs.datastax.com/en/cql-oss/3.3/cql/cql_using/useInsertJSON.html).
 
-- *Insert data into Cassandra with JSON*
+<details><summary>Show native JSON support</summary>
+
+#### JSON syntax for insertions
+
+Insert data into Cassandra with JSON syntax:
 
 ```sql
-INSERT INTO videos JSON '{
-   "videoid":"e466f561-4ea4-4eb7-8dcc-126e0fbfd578",
-     "email":"clunven@sample.com",
-     "title":"A JSON videos",
-     "upload":"2020-02-26 15:09:22 +00:00",
-     "url": "http://google.fr",
-     "frames": [1,2,3,4],
-     "tags":   [ "cassandra","accelerate", "2020"]
-}';
+INSERT INTO accounts_by_user JSON '{
+  "user_id": "1cafb6a4-396c-4da1-8180-83531b6a41e3",
+  "account_id": "811b56c3-cead-40d9-9a3d-e230dcd64f2f",
+  "user_email": "alice@example.org",
+  "user_name": "Alice",
+  "account_type": "Savings",
+  "account_balance": "8500"
+}' ;
 ```
+
+> Warning: missing fields in the provided JSON will entail explicit insertion of corresponding `null` values.
+
+#### JSON output when querying
 
 In the same way you can retrieve JSON out of Cassandra ([more info here](https://docs.datastax.com/en/cql-oss/3.3/cql/cql_using/useQueryJSON.html)).
 
-- *Retrieve data from Cassandra as JSON*
-
 ```sql
-select json title,url,tags from videos;
+SELECT JSON account_type, account_balance
+  FROM accounts_by_user
+  WHERE user_id=1cafb6a4-396c-4da1-8180-83531b6a41e3;
 ```
 
-![image](images/04.png?raw=true)
+_👁️ Output_
 
-**✅ 3b. Create your Application token** :
-
-You need to create an Astra DB token, which will be used to interact with the
-database through the Swagger UI. Once created, store its value in a safe place
-(the Astra console won't show that to you again!) and do not post it in public.
-
-To create the token from your main dashboard (where your databases are listed)
-simply click on the "..." menu next to your database and choose "Generate a token".
-Choose the role "Database Administrator" and click on "Generate Token".
-
-_Alternatively, go to the Astra dashboard, open the Organization menu on the
-top left and choose "Organization settings", then "Token Management" and finally
-you will be able to generate a new token. Choose the role "Database Administrator"._
-
-Download the token in CSV format and/or copy
-its value to a handy place such as a text editor: we will use it immediately!
-
-_See this [documentation](https://docs.datastax.com/en/astra/docs/manage-application-tokens.html) to create your application token._ 
-
-*The Astra DB Token looks like the following (do not copy, it's just an example)*
 ```
-AstraCS:KDfdKeNREyWQvDpDrBqwBsUB:ec80667c....
+ [json]
+-------------------------------------------------------
+  {"account_type": "Savings", "account_balance": 8500}
+ {"account_type": "Checking", "account_balance": 2500}
+
+(2 rows)
 ```
 
-**👁️ Walkthrough**
+This JSON support is but a wrapper around access to the same fixed-schema
+tables seen in the previous section ("Tabular").
 
-Quick way:
+</details>
 
-![image](images/tutorials/generate_token.png?raw=true))
+### ✅ 3b. Create a token and open Swagger
 
-This is what the token page looks like:
+We now turn to using Astra DB's Document API.
 
-![image](images/token_hl.png?raw=true)
+#### Token creation
 
-**Swagger UI**
+To do so, first you need to create an Astra DB token, which will
+be used for authentication to your database.
 
-Next go the "Connect" page, locate the SWAGGER URL
+**Create a token with "Database Administrator" privileges following
+the instructions here: [Create an Astra DB token](https://awesome-astra.github.io/docs/pages/astra/create-token/#c-procedure).**
+(See also [the official docs on tokens](https://docs.datastax.com/en/astra/docs/manage-application-tokens.html).)
+
+Keep the "token" ready to use (it is the long string starting with `AstraCS:.....`).
+
+#### Swagger UI
+
+The Document API can be easily accessed through a Swagger UI:
+go the "Connect" page, stay in the "Document API" subpage, and locate the URL under the "Launching Swagger UI" heading:
 
 ![image](images/connect.png?raw=true)
 
@@ -388,7 +395,7 @@ Locate the "documents" section in the Swagger UI.
 
 ![image](images/05.png?raw=true)
 
-**✅ 3c Create a new empty collection** :
+### ✅ 3c Create a new empty collection
 
 ![Swagger 3c](images/swagger/swagger_3c.png)
 
@@ -399,48 +406,74 @@ Locate the "documents" section in the Swagger UI.
 - For `body` use 
 
 ```json
-{ "name": "col1" }
+{ "name": "users" }
 ```
 - Click `Execute` button
 
 You will get an _"HTTP 201 - Created"_ return code
 
-**✅ 3d. Create a new document** :
+### ✅ 3d. Create new documents
+
+#### Add a first document
 
 ![Swagger 3d](images/swagger/swagger_3d.png)
 
 - Access ***Create a new document***
 - Click `Try it out` button
-- Fill with Header `X-Cassandra-Token` with `<your_token>`
+- Fill with Header `X-Cassandra-Token` with `AstraCS:...[your_token]...`
 - For `namespace-id` use `nosql1`
-- For `collection-id` use `col1`
+- For `collection-id` use `users`
 - For `body` use 
 
 ```json
 {
-    "videoid":"e466f561-4ea4-4eb7-8dcc-126e0fbfd573",
-    "email":"clunven@sample.com",
-    "title":"A Second video",
-    "upload":"2020-02-26 15:09:22 +00:00",
-    "url": "http://google.fr",
-    "frames": [1,2,3,4],
-    "tags":   [ "cassandra","accelerate", "2020"],
-    "formats": { 
-       "mp4": {"width":1,"height":1},
-       "ogg": {"width":1,"height":1}
-    }
+    "accounts": [
+        {
+            "balance": "1000",
+            "id": "81def5e2-84f4-4885-a920-1c14d2be3c20",
+            "type": "Checking"
+        }
+    ],
+    "email": "bob@example.org",
+    "id": "0d2b2319-9c0b-4ecb-8953-98687f6a99ce",
+    "name": "Bob"
 }
 ```
 - Click `Execute` button
 
-*👁️ Expected output*
+_👁️ Expected output (your ID will be different)_
+
 ```json
 {
-  "documentId":"5d746e40-97cf-490b-ab0d-68cfbc5d2ef3"
+  "documentId": "137d8609-87f6-4cb7-9506-e52f338e79e9"
 }
 ```
 
-You can add a couple of documents changing values, new documents with new ids will be generated
+#### Add another document
+
+Repeat with the following body, which has _a different structure_:
+
+```json
+{
+    "accounts": [
+        {
+            "balance": "2500",
+            "id": "83428a85-5c8f-4398-8019-918d6e1d3a93",
+            "type": "Checking"
+        },
+        {
+            "balance": "1500",
+            "id": "811b56c3-cead-40d9-9a3d-e230dcd64f2f",
+            "type": "Savings"
+        }
+    ],
+    "email": "alice@example.org",
+    "id": "1cafb6a4-396c-4da1-8180-83531b6a41e3",
+    "name": "Alice"
+}
+```
+
+As before, the document will automatically be given an internal unique ID.
 
 **✅ 3e Find all documents of a collection** :
 
