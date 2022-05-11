@@ -61,7 +61,7 @@ In a tabular database we will store ... tables! The Astra DB Service is built on
 
 > **Tabular databases** organize data in rows and columns, but with a twist from the traditional RDBMS. Also known as wide-column stores or partitioned row stores, they provide the option to organize related rows in partitions that are stored together on the same replicas to allow fast queries. Unlike RDBMSs, the tabular format is not necessarily strict. For example, Apache Cassandra™ does not require all rows to contain values for all columns in the table. Like Key/Value and Document databases, Tabular databases use hashing to retrieve rows from the table. Examples include: Cassandra, HBase, and Google Bigtable.
 
-**✅ 2a. Describe your Keyspace**
+### ✅ 2a. Describe your Keyspace
 
 At Database creation you provided a keyspace, a logical grouping for tables.
 Let's visualize it.
@@ -80,7 +80,7 @@ DESCRIBE KEYSPACES;
 
 ![image](images/03.png?raw=true)
 
-**✅ 2b. Create table**
+### ✅ 2b. Create table
 
 - *Execute the following Cassandra Query Language commands:*
 
@@ -133,9 +133,9 @@ CREATE TABLE nosql1.accounts_by_user (
     AND speculative_retry = '99PERCENTILE';
 ```
 
-**✅ 2c. Working with DATA** :
+### ✅ 2c. Working with DATA
 
-- *Insert some entries into the table:*
+#### Insert some entries into the table
 
 ```sql
 INSERT INTO accounts_by_user(user_id, account_id, account_balance, account_type, user_email, user_name)
@@ -167,7 +167,7 @@ VALUES(
 );
 ```
 
-- *Read values*
+#### Read values
 
 ```sql
 SELECT * FROM accounts_by_user;
@@ -188,7 +188,7 @@ SELECT * FROM accounts_by_user;
 > Notice that all three rows are "filled with data", despite the second of the insertions above skipping the `user_email` and `user_name` columns:
 > this is because these are **static columns** (i.e. associated to the whole partition) and in this case their value had been written already.
 
-- *Read by primary key*
+#### Read by primary key
 
 ```sql
 SELECT user_email, account_type, account_balance
@@ -207,13 +207,13 @@ SELECT user_email, account_type, account_balance
 (1 rows)
 ```
 
-**✅ 2d. Working with PARTITIONS** :
+### ✅ 2d. Working with PARTITIONS
 
 But data can be grouped, we stored together what should be retrieved together.
 
-- *Try a query not compatible with the data model* 
+#### Try a query not compatible with the data model
 
-</details><summary>(Optional: click to expand)</summary>
+<details><summary>(Optional: click to expand)</summary>
 
 ```
 SELECT account_id, account_type, account_balance
@@ -284,7 +284,7 @@ Didn't get enough response rows; actual rows per range: 0.04; remaining rows: 99
 
 </details>
 
-- *Retrieve data from a whole partition*
+#### Retrieve data from a whole partition
 
 ```sql
 SELECT account_id, account_type, account_balance
