@@ -18,11 +18,13 @@ It doesn't matter if you join our workshop live or you prefer to do at your own 
 
 ## Participation Badge / Homework
 
+<img src="images/intro-to-nosql-badge.png?raw=true" width="200" align="right" />
+
 To get the verified badge, you have to complete the following steps:
 
 1. Complete the practice steps of this workshop as explained below. Steps 1-4 (Astra account + tabular/document/key-value databases) are mandatory, step 5 (graph database) is optional. Take a screenshot of completion of the last step for sections 2, 3 and 4 (either a CQL command output or a response in the Swagger UI). _NOTE: When taking screenshots ensure NOT to copy your Astra DB secrets!_
+2. Submit the practice [here](https://dtsx.io/nosql-ws-hw), answering a few "theory" questions and also attaching the screenshots.
 <!-- x. Complete [try-it-out scenario](https://www.datastax.com/try-it-out) and make a screenshot of the "scenario completed" screen -->
-2. Submit the practice [here](https://dtsx.io/nosql-ws-hw), answering test questions and attaching the screenshots.
 
 ## Practice
 
@@ -41,7 +43,7 @@ a monthly free credit to use, covering about 20M reads/writes and 80GB storage (
 
 Click the button below to login or register on DataStax Astra DB. You can use your `Github`, `Google` accounts or register with an `email`.
 
-<a href="https://astra.dev/2-9"><img src="https://github.com/datastaxdevs/workshop-graphql-netflix/raw/master/img/create_astra_db.png?raw=true" /></a>
+<a href="https://astra.datastax.com"><img src="https://github.com/datastaxdevs/workshop-graphql-netflix/raw/master/img/create_astra_db.png?raw=true" /></a>
 
 **Use the following values when creating the database** (this makes your life easier further on):
 
@@ -53,9 +55,9 @@ Click the button below to login or register on DataStax Astra DB. You can use yo
 
 More info on account creation [here](https://awesome-astra.github.io/docs/pages/astra/create-account/).
 
-#### You will see your new database in `pending` or `initailizing` on the Dashboard.
-
-The status will change to `Active` when the database is ready, this will only take 2-3 minutes. You will also receive an email when it is ready.
+You will see your new database as `pending` or `initializing` on the Dashboard.
+The status will then change to `Active` when the database is ready: this will only take 2-3 minutes.
+At that point you will also receive a confirmation email.
 
 ## 2. Tabular databases
 
@@ -65,7 +67,7 @@ In a tabular database we will store ... tables! The Astra DB Service is built on
 
 ### ✅ 2a. Describe your Keyspace
 
-At Database creation you provided a keyspace, a logical grouping for tables.
+At database creation you provided a keyspace, a logical grouping for tables.
 Let's visualize it.
 In Astra DB go to CQL Console to enter the following commands
 
@@ -202,7 +204,7 @@ _👁️ Expected output_
 ```
 
 > Notice that all three rows are "filled with data", despite the second of the insertions above skipping the `user_email` and `user_name` columns:
-> this is because these are **static columns** (i.e. associated to the whole partition) and in this case their value had been written already.
+> this is because these are **static columns** (i.e. associated to the whole partition) and their value had been written already in the first insertion.
 
 #### Read by primary key
 
@@ -329,7 +331,7 @@ Let's do some hands-on with document database queries.
 
 ### ✅ 3a. Cassandra native JSON support
 
-It is not a known fact but Cassandra accepts JSON query out of the box. You can find more information [here](https://docs.datastax.com/en/cql-oss/3.3/cql/cql_using/useInsertJSON.html).
+It is not widely known, but Cassandra accepts JSON queries out of the box. You can find more information [here](https://docs.datastax.com/en/cql-oss/3.3/cql/cql_using/useInsertJSON.html).
 
 <details><summary>Show native JSON support</summary>
 
