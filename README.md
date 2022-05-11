@@ -20,7 +20,7 @@ It doesn't matter if you join our workshop live or you prefer to do at your own 
 
 To get the verified badge, you have to complete the following steps:
 
-1. Complete the practice steps of this workshop as explained below. Steps 1-4 (account, tabular, document, key-value) are mandatory, step 5 (graph database) is optional. Take a screenshot of the last completed step for  steps 2, 3 and 4. _NOTE: When taking screenshots ensure NOT to copy your Astra DB secrets!_
+1. Complete the practice steps of this workshop as explained below. Steps 1-4 (Astra account + tabular/document/key-value databases) are mandatory, step 5 (graph database) is optional. Take a screenshot of the last completed step for  steps 2, 3 and 4. _NOTE: When taking screenshots ensure NOT to copy your Astra DB secrets!_
 <!-- x. Complete [try-it-out scenario](https://www.datastax.com/try-it-out) and make a screenshot of the "scenario completed" screen -->
 2. Submit the practice [here](https://dtsx.io/nosql-ws-hw), answering test questions and attaching the screenshots.
 
@@ -75,14 +75,14 @@ In Astra DB go to CQL Console to enter the following commands
 
 - *Enter the command*
 ```sql
-describe keyspaces;
+DESCRIBE KEYSPACES;
 ```
 
 ![image](images/03.png?raw=true)
 
 **✅ 2b. Create table**
 
-- *Execute the following Cassandra Query Language* 
+- *Execute the following Cassandra Query Language commands:*
 
 ```sql
 USE nosql1;
@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS accounts_by_user (
 )   WITH CLUSTERING ORDER BY (account_id ASC);
 ```
 
-- *Visualize structure*
+- *Visualize keyspace structure:*
 
 ```sql
 DESCRIBE KEYSPACE nosql1;
@@ -135,7 +135,7 @@ CREATE TABLE nosql1.accounts_by_user (
 
 **✅ 2c. Working with DATA** :
 
-- *Insert some entries on first table*
+- *Insert some entries into the table:*
 
 ```sql
 INSERT INTO accounts_by_user(user_id, account_id, account_balance, account_type, user_email, user_name)
@@ -185,7 +185,7 @@ SELECT * FROM accounts_by_user;
 (3 rows)
 ```
 
-> Notice that all three rows are "filled with data", despite the second insertion above skipping the `user_email` and `user_name` columns:
+> Notice that all three rows are "filled with data", despite the second of the insertions above skipping the `user_email` and `user_name` columns:
 > this is because these are **static columns** (i.e. associated to the whole partition) and in this case their value had been written already.
 
 - *Read by primary key*
@@ -211,7 +211,9 @@ SELECT user_email, account_type, account_balance
 
 But data can be grouped, we stored together what should be retrieved together.
 
-</details><summary>- *Try a query not compatible with the data model* (optional, click to expand)</summary>
+- *Try a query not compatible with the data model* 
+
+</details><summary>(Optional: click to expand)</summary>
 
 ```
 SELECT account_id, account_type, account_balance
@@ -694,7 +696,7 @@ Astra DB does not contain yet a way to implement Graph Databases use cases. But 
 
 For graph databases, the presenter will show a demo based on the example in the slides.
 
-The practice is based on another example. Since it cannot be done in the browser using
+The hands-on practice for you is different. But since it cannot be done in the browser using
 Astra DB like the rest, it is kept separate and not included in today's curriculum.
 
 🔥 Yet, you are strongly encouraged to try it at your own pace, on your own computer,
