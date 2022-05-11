@@ -20,7 +20,7 @@ It doesn't matter if you join our workshop live or you prefer to do at your own 
 
 To get the verified badge, you have to complete the following steps:
 
-1. Complete the practice steps of this workshop as explained below. Steps 1-4 (Astra account + tabular/document/key-value databases) are mandatory, step 5 (graph database) is optional. Take a screenshot of the last completed step for  steps 2, 3 and 4. _NOTE: When taking screenshots ensure NOT to copy your Astra DB secrets!_
+1. Complete the practice steps of this workshop as explained below. Steps 1-4 (Astra account + tabular/document/key-value databases) are mandatory, step 5 (graph database) is optional. Take a screenshot of completion of the last step for sections 2, 3 and 4 (either a CQL command output or a response in the Swagger UI). _NOTE: When taking screenshots ensure NOT to copy your Astra DB secrets!_
 <!-- x. Complete [try-it-out scenario](https://www.datastax.com/try-it-out) and make a screenshot of the "scenario completed" screen -->
 2. Submit the practice [here](https://dtsx.io/nosql-ws-hw), answering test questions and attaching the screenshots.
 
@@ -37,7 +37,9 @@ To get the verified badge, you have to complete the following steps:
 **`ASTRADB`** is the simplest way to run Cassandra with zero operations at all - just push the button and get your cluster. No credit card required,
 a monthly free credit to use, covering about 20M reads/writes and 80GB storage (sufficient to run small production workloads), all for FREE.
 
-✅ **Step 1a:** Click the button below to login or register with Datastax. You can use your `Github`, `Google` accounts or register with an `email`.
+### ✅ 1a. Register a free account on Astra
+
+Click the button below to login or register on DataStax Astra DB. You can use your `Github`, `Google` accounts or register with an `email`.
 
 <a href="https://astra.dev/2-9"><img src="https://github.com/datastaxdevs/workshop-graphql-netflix/raw/master/img/create_astra_db.png?raw=true" /></a>
 
@@ -47,7 +49,7 @@ a monthly free credit to use, covering about 20M reads/writes and 80GB storage (
 |---|---|
 |**database name**| `workshops` |
 |**keyspace**| `nosql1` |
-|**Cloud Provider**| *Use the one you like, click a cloud provider logo, pick an Area in the list and finally pick a region.* |
+|**Cloud Provider**| Stick to GCP and then pick an "unlocked" region to start immediately |
 
 More info on account creation [here](https://awesome-astra.github.io/docs/pages/astra/create-account/).
 
@@ -181,6 +183,11 @@ VALUES(
 ```sql
 SELECT * FROM accounts_by_user;
 ```
+
+> Such a full-table query is strongly discouraged in most distributed databases
+> as it involves contacting many nodes to assemble the whole result dataset:
+> here we are using it for learning purposes, not in production and on a table
+> with very few rows!
 
 _👁️ Expected output_
 
@@ -395,7 +402,7 @@ Locate the "documents" section in the Swagger UI. You are now ready to fire requ
 
 ![image](images/05.png?raw=true)
 
-### ✅ 3c Create a new empty collection
+### ✅ 3c. Create a new empty collection
 
 ![Swagger 3c](images/swagger/swagger_3c.png)
 
@@ -420,7 +427,7 @@ You will get an `HTTP 201 - Created` return code.
 
 <details><summary>Click to show a screenshot</summary>
   
-![image](images/images/swagger_responses_annotated.png?raw=true)
+![image](images/swagger_responses_annotated.png?raw=true)
 
 </details>
 
@@ -487,7 +494,7 @@ Repeat with the following body, which has _a different structure_:
 
 As before, the document will automatically be given an internal unique `documentId`.
 
-### ✅ 3e Find all documents in a collection
+### ✅ 3e. Find all documents in a collection
 
 ![Swagger 3e](images/swagger/swagger_3e.png)
 
@@ -539,7 +546,7 @@ _👁️ Expected output (take note of the `documentId`s of your output for late
 }
 ```
 
-### ✅ 3f Retrieve a document by ID its id
+### ✅ 3f. Retrieve a document by ID its id
 
 ![Swagger 3f](images/swagger/swagger_3f.png)
 
@@ -571,7 +578,7 @@ _👁️ Expected output_
 }
 ```
 
-### ✅ 3g Search document with a "where" clause
+### ✅ 3g. Search document with a "where" clause
 
 ![Swagger 3g](images/swagger/swagger_3g.png)
 
@@ -584,6 +591,7 @@ _👁️ Expected output_
 - Click `Execute` button
 
 *👁️ Expected output*
+
 ```json
 {
   "data": {
@@ -612,117 +620,115 @@ _👁️ Expected output_
 
 ## 4. Key/Value Databases
 
-> **Key/Value databases** are some of the simplest and yet powerful as all of the data within consists of an indexed key and a value. Key-value databases use a hashing mechanism such that given a key, the database can quickly retrieve an associated value. Hashing mechanisms provide constant time access, which means they maintain high performance even at large scale. The keys can be any type of object, but are typically a string. The values are generally opaque blobs (i.e., a sequence of bytes that the database does not interpret). Examples include: Redis, Amazon DynamoDB, Riak, and Oracle NoSQL database. Some tabular NoSQL databases, like Cassandra, can also service key/value needs.
+> **Key/Value databases** are some of the simplest and yet powerful as all of the data within consists of an indexed key and a value. Key-value databases use a hashing mechanism, so that that given a key, the database can quickly retrieve the associated value. Hashing mechanisms provide constant time access, which means they maintain high performance even at large scale. The keys can be any type of object, but are typically a string. The values are generally opaque blobs (i.e. a sequence of bytes that the database does not interpret). Examples include: Redis, Amazon DynamoDB, Riak, and Oracle NoSQL database. Some tabular NoSQL databases, like Cassandra, can also service key/value needs.
 
-**✅ 4b. Create a table with GraphQL**
+### ✅ 4a. Create a table for Key/Value
 
-Navigate to the GraphQL playground, by clicking `Connect`, then `GraphQL API`, and finally you should see the URL under `Launching GraphQL Playground`. Ctrl-click or right-click the link to launch into a new tab.
-
-![Graph connect](images/graph_connect.png)
-
-Then you need to enter in your Astra DB token to authenticate and talk to the database. Notice the "server cannot be reached" message. This is simply telling you it cannot make the connection because you are not authenticated. Click on `HTTP Headers` at the bottom and paste in your token.
-
-![Screen Shot 2021-05-20 at 8 49 48 AM](https://user-images.githubusercontent.com/23346205/118981634-88de8380-b948-11eb-9ece-5f75f153020e.png)
-
-Paste in your token.
-
-![Screen Shot 2021-05-20 at 8 53 07 AM](https://user-images.githubusercontent.com/23346205/118982115-18843200-b949-11eb-840c-acce0a0c562a.png)
-
-Now you are ready to go.
-
-Use this query. Since we are creating a table we want to use the `graphql-schema` tab
-
-```
-mutation {
-  kv: createTable(
-    keyspaceName:"nosql1",
-    tableName:"key_value",
-    partitionKeys: [ # The keys required to access your data
-      { name: "key", type: {basic: TEXT} }
-    ]
-    values: [ # The values associated with the keys
-      { name: "value", type: {basic: TEXT} }
-    ]
-  )
-}
-```
-
-![Screen Shot 2021-05-20 at 8 58 13 AM](https://user-images.githubusercontent.com/23346205/118982905-df988d00-b949-11eb-8584-9407c9efa80e.png)
-
-You can check in the CQL Console as well;
+Go to the CQL Console again and issue the following commands
+to create a new, simple table with just two columns:
 
 ```sql
-use nosql1;
+USE nosql1;
 
-describe table key_value;
+CREATE TABLE users_kv (
+  key   TEXT PRIMARY KEY,
+  value TEXT
+);
 ```
 
-*Expected output*
+### ✅ 4b. Populate the table
 
-![image](images/cqlconsole1.png?raw=true)
-
-**✅ 4c. Populate the table**
-
-Any of the created APIs can be used to interact with the GraphQL data, to write or read data. Since we are working with data now and not creating schema you will need to **swtich to the `graphql` tab**. Also, make sure you **fill in your Astra DB token again**.
-
-- *Fill the header token again*
-
-```json
-{
-  "x-cassandra-token":"AstraCS:KDfdKeNREyWQvDpDrBqwBsUB:ec80667c...."
-}
-```
-
-![Screen Shot 2021-05-20 at 9 04 47 AM](https://user-images.githubusercontent.com/23346205/118983681-af9db980-b94a-11eb-82b7-e0c852701265.png)
-
-Now, let’s navigate to your new keyspace `nosql1` inside the playground. **Change tab to `graphql`** and pick url `/graphql/nosql1`. Your URL should end with something like `/api/graphql/nosql1`. If you have trouble ensuring this, switch back to the `graphql-schema` tab to grab the URL and applying some surgery on it to use the end point that includes `graphql` aand the keyspace `nosql1` so that it ends with `/api/graphql/nosql1` as explained earlier.
-
-![Screen Shot 2021-05-20 at 9 13 26 AM](https://user-images.githubusercontent.com/23346205/118985049-1d96b080-b94c-11eb-87c4-0340e941d37c.png)
-
-
-Then paste in the following query and click "play". 
-![Screen Shot 2021-05-20 at 9 17 35 AM](https://user-images.githubusercontent.com/23346205/118985407-6c444a80-b94c-11eb-9b7d-d83e35e40bf1.png)
-
-- *Execute this query*
-
-```
-mutation insert2KV {
-  key1: insertkey_value(value: {key:"key1", value:"bbbb"}) {
-    value {
-      key,value
-    }
-  }
-  key2: insertkey_value(value: {key:"key2", value:"bbbb"}) {
-    value {
-      key,value
-    }
-  }
-}
-```
-
-- Check with CQL Console
+Insert into the table all the following entries.
+Note that all inserted values, regardless of their "true" data type,
+have been coerced into strings according to the table schema.
+Also note how the keys are structured and how some entries reference other,
+effectively creating a set of interconnected pieces of information on the users:
 
 ```sql
-select * from key_value;
+INSERT INTO users_kv (key, value) VALUES ('user:1cafb6a4-396c-4da1-8180-83531b6a41e3:name',       'Alice');
+INSERT INTO users_kv (key, value) VALUES ('user:1cafb6a4-396c-4da1-8180-83531b6a41e3:email',      'alice@example.org');
+INSERT INTO users_kv (key, value) VALUES ('user:1cafb6a4-396c-4da1-8180-83531b6a41e3:accounts',   '{83428a85-5c8f-4398-8019-918d6e1d3a93, 811b56c3-cead-40d9-9a3d-e230dcd64f2f}');
+
+INSERT INTO users_kv (key, value) VALUES ('user:0d2b2319-9c0b-4ecb-8953-98687f6a99ce:name',       'Bob');
+INSERT INTO users_kv (key, value) VALUES ('user:0d2b2319-9c0b-4ecb-8953-98687f6a99ce:email',      'bob@example.org');
+INSERT INTO users_kv (key, value) VALUES ('user:0d2b2319-9c0b-4ecb-8953-98687f6a99ce:accounts',   '{81def5e2-84f4-4885-a920-1c14d2be3c20}');
+
+INSERT INTO users_kv (key, value) VALUES ('account:83428a85-5c8f-4398-8019-918d6e1d3a93:type',    'Checking');
+INSERT INTO users_kv (key, value) VALUES ('account:83428a85-5c8f-4398-8019-918d6e1d3a93:balance', '2500');
+
+INSERT INTO users_kv (key, value) VALUES ('account:811b56c3-cead-40d9-9a3d-e230dcd64f2f:type',    'Savings');
+INSERT INTO users_kv (key, value) VALUES ('account:811b56c3-cead-40d9-9a3d-e230dcd64f2f:balance', '1500');
+
+INSERT INTO users_kv (key, value) VALUES ('account:81def5e2-84f4-4885-a920-1c14d2be3c20:type',    'Checking');
+INSERT INTO users_kv (key, value) VALUES ('account:81def5e2-84f4-4885-a920-1c14d2be3c20:balance', '1000');
 ```
 
-*Expected output:*
+### ✅ 4c. Update a value
 
-![image](images/graphql2.png?raw=true)
+You can imagine an application "navigating the keys" (e.g, from an user to an account) for instance
+when it must update a balance. The actual update would look like:
 
-- *Execute this query*
-
-```
-mutation insert2KV {
-  key1: insertkey_value(value: {key:"key1", value:"cccc"}) {
-    value {
-      key,value
-    }
-  }
-}
+```sql
+INSERT INTO users_kv (key, value) VALUES ('account:81def5e2-84f4-4885-a920-1c14d2be3c20:balance', '9000');
 ```
 
-- Check with CQL Console the values should have been updated. Indeed with Cassandra there are no integrity constraints, so you can de-duplicate values easily.
+Let's check:
+
+```sql
+SELECT * FROM users_kv WHERE key = 'account:81def5e2-84f4-4885-a920-1c14d2be3c20:balance';
+```
+
+*👁️ Expected output*
+
+```
+ key                                                  | value
+------------------------------------------------------+-------
+ account:81def5e2-84f4-4885-a920-1c14d2be3c20:balance |  9000
+
+(1 rows)
+```
+
+#### Alternative update syntax
+
+The same result is obtained with
+
+```sql
+UPDATE users_kv SET value = '-500' WHERE key = 'account:81def5e2-84f4-4885-a920-1c14d2be3c20:balance';
+```
+
+indeed, in most key-value data stores, inserting and updating are one and the same operation
+since the main goal is usually the highest performance (hence, row-existence checks are skipped altogether).
+
+Thus, writing entries with the key of a pre-existing entry will simply overwrite the less recent values,
+enabling a very efficient and simple deduplication strategy.
+
+Check once more what's in the table:
+
+```sql
+SELECT * FROM users_kv ;
+```
+
+*👁️ Expected output*
+
+
+```
+ key                                                  | value
+------------------------------------------------------+------------------------------------------------------------------------------
+ account:81def5e2-84f4-4885-a920-1c14d2be3c20:balance |                                                                         -500
+   user:0d2b2319-9c0b-4ecb-8953-98687f6a99ce:accounts |                                       {81def5e2-84f4-4885-a920-1c14d2be3c20}
+ account:811b56c3-cead-40d9-9a3d-e230dcd64f2f:balance |                                                                         1500
+   user:1cafb6a4-396c-4da1-8180-83531b6a41e3:accounts | {83428a85-5c8f-4398-8019-918d6e1d3a93, 811b56c3-cead-40d9-9a3d-e230dcd64f2f}
+      user:1cafb6a4-396c-4da1-8180-83531b6a41e3:email |                                                            alice@example.org
+       user:1cafb6a4-396c-4da1-8180-83531b6a41e3:name |                                                                        Alice
+       user:0d2b2319-9c0b-4ecb-8953-98687f6a99ce:name |                                                                          Bob
+      user:0d2b2319-9c0b-4ecb-8953-98687f6a99ce:email |                                                              bob@example.org
+    account:83428a85-5c8f-4398-8019-918d6e1d3a93:type |                                                                     Checking
+    account:811b56c3-cead-40d9-9a3d-e230dcd64f2f:type |                                                                      Savings
+    account:81def5e2-84f4-4885-a920-1c14d2be3c20:type |                                                                     Checking
+ account:83428a85-5c8f-4398-8019-918d6e1d3a93:balance |                                                                         2500
+
+(12 rows)
+```
 
 [🏠 Back to Table of Contents](#table-of-content)
 
