@@ -43,7 +43,7 @@ a monthly free credit to use, covering about 20M reads/writes and 80GB storage (
 
 Click the button below to login or register on DataStax Astra DB. You can use your `Github`, `Google` accounts or register with an `email`.
 
-<a href="https://astra.datastax.com"><img src="https://github.com/datastaxdevs/workshop-graphql-netflix/raw/master/img/create_astra_db.png?raw=true" /></a>
+<a href="https://astra.dev/5-18"><img src="https://github.com/datastaxdevs/workshop-graphql-netflix/raw/master/img/create_astra_db.png?raw=true" /></a>
 
 **Use the following values when creating the database** (this makes your life easier further on):
 
