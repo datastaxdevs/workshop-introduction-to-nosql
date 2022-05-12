@@ -417,7 +417,7 @@ Locate the "documents" section in the Swagger UI. You are now ready to fire requ
 ```json
 { "name": "users" }
 ```
-- Click `Execute` button
+- Click the `Execute` button
 
 You will get an `HTTP 201 - Created` return code.
 
@@ -460,7 +460,7 @@ You will get an `HTTP 201 - Created` return code.
     "name": "Bob"
 }
 ```
-- Click `Execute` button
+- Click the `Execute` button
 
 _👁️ Expected output (your `documentId` will be different)_
 
@@ -496,9 +496,43 @@ Repeat with the following body, which has _a different structure_:
 
 As before, the document will automatically be given an internal unique `documentId`.
 
-### ✅ 3e. Find all documents in a collection
 
-![Swagger 3e](images/swagger/swagger_3e.png)
+### ✅ 3e. Retrieve a document by its ID
+
+![Swagger 3e](images/swagger/swagger_3eB.png)
+
+- Access ***Get a document***
+- Click `Try it out` button
+- Fill Header `X-Cassandra-Token` with `<your_token>`
+- For `namespace-id` use `nosql1`
+- For `collection-id` use `users`
+- For `document-id` use Bob's `documentId` (e.g. `137d8609-87f6-4cb7-9506-e52f338e79e9` in the above sample output)
+- Click the `Execute` button
+
+_👁️ Expected output_
+
+```json
+{
+  "documentId": "137d8609-87f6-4cb7-9506-e52f338e79e9",
+  "data": {
+    "accounts": [
+      {
+        "balance": "1000",
+        "id": "81def5e2-84f4-4885-a920-1c14d2be3c20",
+        "type": "Checking"
+      }
+    ],
+    "email": "bob@example.org",
+    "id": "0d2b2319-9c0b-4ecb-8953-98687f6a99ce",
+    "name": "Bob"
+  }
+}
+```
+
+
+### ✅ 3f. Find all documents in a collection
+
+![Swagger 3f](images/swagger/swagger_3fB.png)
 
 - Access ***Search documents in a collection***
 - Click `Try it out` button
@@ -508,7 +542,7 @@ As before, the document will automatically be given an internal unique `document
 
 Leave other fields blank (in particular, every query is paged in Cassandra).
 
-- Click `Execute` button
+- Click the `Execute` button
 
 _👁️ Expected output (take note of the `documentId`s of your output for later)_
 
@@ -548,49 +582,22 @@ _👁️ Expected output (take note of the `documentId`s of your output for late
 }
 ```
 
-### ✅ 3f. Retrieve a document by ID its id
-
-![Swagger 3f](images/swagger/swagger_3f.png)
-
-- Access ***Get a document***
-- Click `Try it out` button
-- Fill Header `X-Cassandra-Token` with `<your_token>`
-- For `namespace-id` use `nosql1`
-- For `collection-id` use `users`
-- For `document-id` use Bob's `documentId` (e.g. `137d8609-87f6-4cb7-9506-e52f338e79e9` in the above sample output)
-- Click `Execute` button
-
-_👁️ Expected output_
-
-```json
-{
-  "documentId": "137d8609-87f6-4cb7-9506-e52f338e79e9",
-  "data": {
-    "accounts": [
-      {
-        "balance": "1000",
-        "id": "81def5e2-84f4-4885-a920-1c14d2be3c20",
-        "type": "Checking"
-      }
-    ],
-    "email": "bob@example.org",
-    "id": "0d2b2319-9c0b-4ecb-8953-98687f6a99ce",
-    "name": "Bob"
-  }
-}
-```
 
 ### ✅ 3g. Search document with a "where" clause
 
+The endpoint you just used can support `where` clauses as well,
+expressed as JSON. You don't need to navigate away from it do try the
+following:
+
 ![Swagger 3g](images/swagger/swagger_3g.png)
 
-- Access ***Search documents in a collection***
+- Access ***Search documents in a collection*** (you should be there already)
 - Click `Try it out` button
 - Fill Header `X-Cassandra-Token` with `<your_token>`
 - For `namespace-id` use `nosql1`
 - For `collection-id` use `users`
 - For `where` use `{"name": {"$eq": "Alice"}}`
-- Click `Execute` button
+- Click the `Execute` button
 
 *👁️ Expected output*
 
