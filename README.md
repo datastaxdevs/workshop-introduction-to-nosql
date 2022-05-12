@@ -585,7 +585,7 @@ _👁️ Expected output (take note of the `documentId`s of your output for late
 
 ### ✅ 3g. Search document with a "where" clause
 
-The endpoint you just used can support `where` clauses as well,
+The endpoint you just used can support [`where` clauses](https://docs.datastax.com/en/astra/docs/read-documents.html#_retrieving_a_document_using_a_where_clause) as well,
 expressed as JSON. You don't need to navigate away from it do try the
 following:
 
