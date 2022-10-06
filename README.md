@@ -393,6 +393,12 @@ the instructions here: [Create an Astra DB token](https://awesome-astra.github.i
 
 Keep the "token" ready to use (it is the long string starting with `AstraCS:.....`).
 
+> **⚠️ Important**
+> ```
+> The instructor will show you on screen how to create a token 
+> but will have to destroy to token immediately for security reasons.
+> ```
+
 #### Swagger UI
 
 The Document API can be easily accessed through a Swagger UI:
