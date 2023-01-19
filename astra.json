@@ -1,0 +1,15 @@
+{
+  "name": "Introduction to NoSQL Workshop",
+  "description": "An introduction to NoSQL Databases",
+  "skillLevel": "Beginner",
+  "language":[],
+  "stack":[],
+  "heroImage": "https://github.com/datastaxdevs/workshop-introduction-to-nosql/raw/main/images/intro-to-nosql-cover.png?raw=true"
+  "githubUrl": "https://github.com/datastaxdevs/workshop-introduction-to-nosql",
+  "youTubeUrl": [ "https://www.youtube.com/watch?v=rhzUrejsA4A"],
+  "tags": [
+    { "name": "nosql" }
+  ],
+  "category": "workshop",
+  "usecases": []
+}
